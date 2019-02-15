@@ -33,7 +33,6 @@ class Guide extends Component {
                             <li><Link to="/detail">detail1</Link><span></span></li>
                             <li><Link to="/detail1">detail2</Link><span></span></li>
                             <li><Link to="/">detail3</Link><span></span></li>
-                             <li><Link to="/">detail4</Link><span></span></li>
                         </ul>
                     </div>
                     <div className="type-right">
