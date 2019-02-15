@@ -15,9 +15,7 @@ class Login extends Component {
         let history = this.props.history;
         console.log("1111111");
         let data = {username: "123", password: "123"};
-
-        axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8";
-        axios.post('http://10.202.0.6:8080/data-mining/u/login', JSON.stringify(data)
+        axios.post('http://10.202.0.6:8080/data-mining/u/login', data
         ).then(res => {
             console.log('res=>',res);
         });
@@ -27,10 +25,12 @@ class Login extends Component {
         //     data:data,
         //     dataType:'json',
         //     success:function(msg){
-        //         //alert(msg);
-        //         if(msg==1){
+        //         console.log(msg);
+        //         console.log(data);
+        //         if(msg.message == "登录成功"){
         //             // window.location.href = "{:U('Index/personal')}";
-        //             console.log("成功")
+        //             // console.log("成功")
+        //             alert("登录成功!");
         //         }else{
         //             alert("登录失败，请重试!");
         //         }
