@@ -50,7 +50,7 @@ class Login extends Component {
       <div className="App">
           <Bg />
 
-          <h1 style={{"color": "#fff"}}>Effect Login Form</h1>
+          <h1 style={{"color": "#fff"}}>农产品流通和数据挖掘应用系统</h1>
           <div className="sub-main-w3">
               <form>
                   <h2 style={{"color": "#fff"}}>Login Now
@@ -90,7 +90,7 @@ class Login extends Component {
           </div>
 
           <div className="footer">
-              <p>Copyright &copy; 2018.Company name All rights reserved.</p>
+              <p>Copyright &copy; 2018-2019.ZAFU.Chang.NI All rights reserved.</p>
           </div>
 
       </div>
