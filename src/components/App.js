@@ -12,7 +12,7 @@ class App extends Component {
             <Router history={createBrowserHistory()}>
                 <Switch>
                     <Route exact path="/" component={Login} />
-                    <Route exact path="/register" component={Register} />
+                    <Route path="/register" component={Register} />
                     <Route path='/guide' component={Guide} />
                 </Switch>
             </Router>

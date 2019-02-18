@@ -4,43 +4,43 @@ import '../styles/css/style.css';
 import '../styles/css/fontawesome-all.css';
 import $ from 'jquery';
 import axios from 'axios';
-window.app = window.app || {};
+import qs from 'qs';
 
 class Login extends Component {
+    super(props){
+
+    }
 
     isLogin = (e) => {
         //提交之前判断输入的字段是否有错误
         e.preventDefault();
+        let username = $('#username').val();
+        let password = $('#password').val();
+        // if($('#username').val() === "123" && $('#password').val() === "123"){
+        //     this.props.history.push('/guide');
+        // }
+        if(username === ""){
+            alert("用户名不能为空");
+        }
+        if(password === ""){
+            alert("密码不能为空")
+        }
 
-        let history = this.props.history;
-        console.log("1111111");
-        let data = {username: "123", password: "123"};
-        axios.post('http://10.202.0.6:8080/data-mining/u/login', data
-        ).then(res => {
-            console.log('res=>',res);
-        });
-        // $.ajax({
-        //     type:"POST",
-        //     url:"http://10.202.0.6:8080/data-mining/u/login",
-        //     data:data,
-        //     dataType:'json',
-        //     success:function(msg){
-        //         console.log(msg);
-        //         console.log(data);
-        //         if(msg.message == "登录成功"){
-        //             // window.location.href = "{:U('Index/personal')}";
-        //             // console.log("成功")
-        //             alert("登录成功!");
-        //         }else{
-        //             alert("登录失败，请重试!");
-        //         }
-        //     }
-        // });
+        axios.post('http://10.202.0.6:8080/data-mining/u/login',qs.stringify({
+            username: username,
+            password: password
+        })).then(res=>{
+            if(res.status === 200) {
+                this.props.history.push('/guide');
+            }else {
+                alert("用户名或密码错误，请重新输入！")
+            }
+        })
+
     }
 
     Register = () => {
-        let history = this.props.history;
-        history.push('/register');
+        this.props.history.push('/register');
     }
 
   render() {
@@ -82,7 +82,7 @@ class Login extends Component {
                           </li>
                       </ul>
                   </div>
-                  <input type="button" value="登录" onClick={this.isLogin} />
+                  <input type="submit" value="登录" onClick={this.isLogin.bind(this)} />
                   <input type="button" value="注册" onClick={this.Register} />
               </form>
           </div>
