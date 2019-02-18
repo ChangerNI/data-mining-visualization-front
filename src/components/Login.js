@@ -21,9 +21,11 @@ class Login extends Component {
         // }
         if(username === ""){
             alert("用户名不能为空");
+            this.props.history.push('/');
         }
         if(password === ""){
-            alert("密码不能为空")
+            alert("密码不能为空");
+            this.props.history.push('/');
         }
 
         axios.post('http://10.202.0.6:8080/data-mining/u/login',qs.stringify({
