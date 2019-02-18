@@ -6,6 +6,13 @@ import '../styles/css/bootstrap-table.css';
 import '../../node_modules/antd/dist/antd.css';
 import $ from 'jquery';
 import TableContent from './Table';
+// 引入 ECharts 主模块
+import echarts from 'echarts/lib/echarts';
+// 引入柱状图
+import  'echarts/lib/chart/line';
+// 引入提示框和标题组件
+import 'echarts/lib/component/tooltip';
+import 'echarts/lib/component/title';
 
 class Detail extends Component {
 
@@ -15,9 +22,10 @@ class Detail extends Component {
     //         url : 'user/getUserListPage'
     //     });
     // }
-    componentWillMount () {
+    componentDidMount = () => {
         //基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'));
+
         //指定图表的配置项和数据
         var option = {
             title: {
@@ -81,7 +89,6 @@ class Detail extends Component {
                 }
             ]
         };
-
 
         //使用刚指定的配置项和数据显示图表
         myChart.setOption(option);
