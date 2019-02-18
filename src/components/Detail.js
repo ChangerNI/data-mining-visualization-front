@@ -8,7 +8,7 @@ import $ from 'jquery';
 import TableContent from './Table';
 // 引入 ECharts 主模块
 import echarts from 'echarts/lib/echarts';
-// 引入柱状图
+// 引入折线图
 import  'echarts/lib/chart/line';
 // 引入提示框和标题组件
 import 'echarts/lib/component/tooltip';
