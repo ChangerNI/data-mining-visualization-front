@@ -92,6 +92,7 @@ class Detail extends Component {
 
                                 </div>
                             </div>
+                            <div className="row" style={{"height":"400px","border":"1px solid #ccc"}}></div>
 
                             <h2 className="sub-header">Section title</h2>
                             <div className="table-responsive">
