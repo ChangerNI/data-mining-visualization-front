@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table,Pagination } from 'antd';
+import { Table,Pagination, LocaleProvider } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
 import reqwest from 'reqwest';
 
 /* 分页的配置, 传入总条数, 页码, 页码条数*/
@@ -13,8 +14,9 @@ const PagingConfiguration = (totalCount, pageNo, pageSize, pageSizeOptions) => (
     showQuickJumper: true,
     pageSizeOptions: pageSizeOptions || [
         "10",
-        "20",
-        "50"
+        "30",
+        "50",
+        "100"
     ],
     showTotal: () => <div>
         当前第 <span>{pageNo === 1 ? 1 : pageSize * (pageNo - 1)}</span> 到
@@ -25,22 +27,30 @@ const PagingConfiguration = (totalCount, pageNo, pageSize, pageSizeOptions) => (
 });
 
 const columns = [{
-    title: 'Name',
+    title: '品名',
     dataIndex: 'name',
     sorter: true,
     render: name => `${name.first} ${name.last}`,
     width: '20%',
 }, {
-    title: 'Gender',
-    dataIndex: 'gender',
-    filters: [
-        { text: 'Male', value: 'male' },
-        { text: 'Female', value: 'female' },
-    ],
+    title: '最低价',
+    dataIndex: 'lowest-price',
     width: '20%',
 }, {
-    title: 'Email',
-    dataIndex: 'email',
+    title: '平均价',
+    dataIndex: 'average-price',
+},{
+    title: '最高价',
+    dataIndex: 'highest',
+},{
+    title: '规格',
+    dataIndex: 'specification',
+},{
+    title: '单位',
+    dataIndex: 'unit',
+},{
+    title: '发布日期',
+    dataIndex: 'date',
 }];
 
 class TableContent extends Component {
@@ -101,18 +111,20 @@ class TableContent extends Component {
         const pageSize = 10;
 
         return (
-            <div>
-                <Table
-                    columns={columns}
-                    rowKey={record => record.login.uuid}
-                    dataSource={this.state.data}
-                    pagination={PagingConfiguration(totalCount, pageNo, pageSize,[10,20,30])}
-                    loading={this.state.loading}
-                    onChange={this.handleTableChange}
-                    bodyStyle={{height: "720px"}}
-                    locale={{emptyText: null}}
-                />
-            </div>
+            <LocaleProvider locale={zhCN}>
+                <div>
+                    <Table
+                        columns={columns}
+                        rowKey={record => record.login.uuid}
+                        dataSource={this.state.data}
+                        pagination={PagingConfiguration(totalCount, pageNo, pageSize,[10,30,50,100])}
+                        loading={this.state.loading}
+                        onChange={this.handleTableChange}
+                        bodyStyle={{height: "720px"}}
+                        locale={{emptyText: null}}
+                    />
+                </div>
+            </LocaleProvider>
         );
     }
 }

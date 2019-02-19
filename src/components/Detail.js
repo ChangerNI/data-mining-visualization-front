@@ -13,6 +13,8 @@ import  'echarts/lib/chart/line';
 // 引入提示框和标题组件
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
+import axios from "axios";
+import qs from "qs";
 
 class Detail extends Component {
 
@@ -93,6 +95,17 @@ class Detail extends Component {
         //使用刚指定的配置项和数据显示图表
         myChart.setOption(option);
     }
+
+    showFruit = () => {
+        axios.post('http://10.202.0.6:8080/data-mining/product/query',qs.stringify({
+            productType: "fruit",
+            pageNum: "7",
+            pageSize: "30"
+
+        })).then(res=>{
+            console.log(res);
+        })
+    }
     render() {
         return (
             <div id="detail">
@@ -141,7 +154,7 @@ class Detail extends Component {
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         width="200" height="200" className="img-responsive"
                                         alt="Generic placeholder thumbnail" />
-                                        <h4>水果</h4>
+                                        <h4 onClick={this.showFruit}>水果</h4>
 
                                 </div>
                                 <div className="col-xs-6 col-sm-2 placeholder lists">
@@ -175,9 +188,6 @@ class Detail extends Component {
 
                             <h2 className="sub-header">Section title</h2>
                             <div className="table-responsive">
-                                {/*<table className="table table-striped table-bordered table-hover" id="tableL01">*/}
-
-                                {/*</table>*/}
                                 <TableContent />
                             </div>
                         </div>

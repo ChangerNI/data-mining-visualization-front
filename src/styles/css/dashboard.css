@@ -107,3 +107,38 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
+.table-responsive .ant-table-pagination {
+  width: 100% !important;
+  float: none !important;
+  margin: 0 !important;
+  padding: 8px !important;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid #D1D3D8 !important;
+  border-top: 0 !important;
+}
+
+.table-responsive .ant-pagination-total-text {
+  width: 500px;
+}
+
+.ant-table {
+  border: 1px solid #ccc;
+}
+
+.ant-table-row td,
+.ant-table-thead th{
+  border-right: 1px solid #E3E4E8 !important;
+  border-bottom: 1px solid #E3E4E8 !important;
+}
+
+.ant-table-thead tr th {
+  text-align: center !important;
+}
+
+.ant-table-row td:last-child,
+.ant-table-thead th:last-child {
+  border-right: 0 !important;
+}
