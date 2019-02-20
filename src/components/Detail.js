@@ -18,12 +18,9 @@ import qs from "qs";
 
 class Detail extends Component {
 
-    //查询按钮事件
-    // showVegetables = () => {
-    //     $('#mytab').bootstrapTable('refresh', {
-    //         url : 'user/getUserListPage'
-    //     });
-    // }
+    state = {
+        productType: "vegetable"
+    }
     componentDidMount = () => {
         //基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'));
@@ -96,14 +93,34 @@ class Detail extends Component {
         myChart.setOption(option);
     }
 
-    showFruit = () => {
-        axios.post('http://10.202.0.6:8080/data-mining/product/query',qs.stringify({
-            productType: "fruit",
-            pageNum: "7",
-            pageSize: "30"
+    showVegetables = () => {
+        this.setState({
+            productType: "vegetable"
+        })
+    }
 
-        })).then(res=>{
-            console.log(res);
+    showFruit = () => {
+        this.setState({
+            productType: "fruit"
+        })
+    }
+
+    showMeat = () => {
+        this.setState({
+            productType: "meat"
+        })
+
+    }
+
+    showAquatic = () => {
+        this.setState({
+            productType: "Aquatic"
+        })
+    }
+
+    showOil = () => {
+        this.setState({
+            productType: "oil"
         })
     }
     render() {
@@ -141,23 +158,23 @@ class Detail extends Component {
                             <h1 className="page-header">Dashboard</h1>
 
                             <div className="row placeholders">
-                                <div className="col-xs-6 col-sm-2 placeholder lists">
+                                <div className="col-xs-6 col-sm-2 placeholder lists" onClick={this.showVegetables}>
                                     <img
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         width="200" height="200" className="img-responsive"
                                         alt="Generic placeholder thumbnail" />
-                                        <h4 onClick={this.showVegetables}>蔬菜</h4>
+                                        <h4>蔬菜</h4>
 
                                 </div>
-                                <div className="col-xs-6 col-sm-2 placeholder lists">
+                                <div className="col-xs-6 col-sm-2 placeholder lists" onClick={this.showFruit}>
                                     <img
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         width="200" height="200" className="img-responsive"
                                         alt="Generic placeholder thumbnail" />
-                                        <h4 onClick={this.showFruit}>水果</h4>
+                                        <h4>水果</h4>
 
                                 </div>
-                                <div className="col-xs-6 col-sm-2 placeholder lists">
+                                <div className="col-xs-6 col-sm-2 placeholder lists" onClick={this.showMeat}>
                                     <img
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         width="200" height="200" className="img-responsive"
@@ -165,7 +182,7 @@ class Detail extends Component {
                                         <h4>肉类</h4>
 
                                 </div>
-                                <div className="col-xs-6 col-sm-2 placeholder lists">
+                                <div className="col-xs-6 col-sm-2 placeholder lists" onClick={this.showAquatic}>
                                     <img
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         width="200" height="200" className="img-responsive"
@@ -173,7 +190,7 @@ class Detail extends Component {
                                         <h4>水产</h4>
 
                                 </div>
-                                <div className="col-xs-6 col-sm-2 placeholder lists">
+                                <div className="col-xs-6 col-sm-2 placeholder lists" onClick={this.showOil}>
                                     <img
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         width="200" height="200" className="img-responsive"
@@ -188,7 +205,7 @@ class Detail extends Component {
 
                             <h2 className="sub-header">Section title</h2>
                             <div className="table-responsive">
-                                <TableContent />
+                                <TableContent productType={this.state.productType} />
                             </div>
                         </div>
                     </div>

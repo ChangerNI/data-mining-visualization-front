@@ -5,8 +5,8 @@ import reqwest from 'reqwest';
 
 /* 分页的配置, 传入总条数, 页码, 页码条数*/
 const PagingConfiguration = (totalCount, pageNo, pageSize, pageSizeOptions) => ({
-    defaultCurrent: pageNo,
-    defaultPageSize: pageSize,
+    defaultCurrent: 1,
+    defaultPageSize: 10,
     pageSize: pageSize,
     total: totalCount,
     current: pageNo,
@@ -28,29 +28,31 @@ const PagingConfiguration = (totalCount, pageNo, pageSize, pageSizeOptions) => (
 
 const columns = [{
     title: '品名',
-    dataIndex: 'name',
-    sorter: true,
-    render: name => `${name.first} ${name.last}`,
-    width: '20%',
+    dataIndex: 'productName',
+    width: '14%',
 }, {
     title: '最低价',
-    dataIndex: 'lowest-price',
-    width: '20%',
+    dataIndex: 'minPrice',
+    width: '14%',
 }, {
     title: '平均价',
-    dataIndex: 'average-price',
+    dataIndex: 'avgPrice',
+    width: '14%',
 },{
     title: '最高价',
-    dataIndex: 'highest',
+    dataIndex: 'maxPrice',
+    width: '14%',
 },{
     title: '规格',
-    dataIndex: 'specification',
+    dataIndex: 'sizeType',
+    width: '14%',
 },{
     title: '单位',
     dataIndex: 'unit',
+    width: '14%',
 },{
     title: '发布日期',
-    dataIndex: 'date',
+    dataIndex: 'dateTime',
 }];
 
 class TableContent extends Component {
@@ -58,68 +60,76 @@ class TableContent extends Component {
         data: [],
         pagination: {},
         loading: false,
+        pageNum: 1,
+        pageSize: 10,
+        totalCount: ""
     };
 
     componentDidMount() {
         this.fetch();
+        console.log(this.state.pagination);
     }
 
     handleTableChange = (pagination, filters, sorter) => {
         const pager = { ...this.state.pagination };
         pager.current = pagination.current;
+        pager.pageSize = pagination.pageSize;
         this.setState({
             pagination: pager,
         });
         this.fetch({
-            results: pagination.pageSize,
-            page: pagination.current,
-            sortField: sorter.field,
-            sortOrder: sorter.order,
+            pageSize: pagination.pageSize,
+            pageNum: pagination.current,
+            // sortField: sorter.field,
+            // sortOrder: sorter.order,
             ...filters,
         });
     }
 
     fetch = (params = {}) => {
-        console.log('params:', params);
         this.setState({ loading: true });
         reqwest({
-            url: 'https://randomuser.me/api',
-            method: 'get',
+            url: 'http://10.202.0.6:8080/data-mining/product/query',
+            method: 'post',
+            // url: 'https://randomuser.me/api',
+            // method: 'get',
             data: {
-                results: 100,
                 ...params,
+                productType: this.props.productType,
             },
             type: 'json',
         }).then((data) => {
+            console.log(data)
             const pagination = { ...this.state.pagination };
             // Read total count from server
-            pagination.total = data.totalCount;
+            pagination.total = data.data.total;
             // pagination.total = 200;
             this.setState({
                 loading: false,
-                data: data.results,
+                data: data.data.list,
                 pagination,
-                pageNo: pagination.current,
-                pageSize: pagination.pageSize
+                pageNum: pagination.current,
+                pageSize: pagination.pageSize,
+                totalCount: data.data.total
             });
         });
     }
 
     render() {
-        const totalCount = 200;
-        const pageNo = 0;
-        const pageSize = 10;
+        const {totalCount,pageNum,pageSize} = this.state;
+        console.log(pageNum,pageSize);
 
         return (
             <LocaleProvider locale={zhCN}>
                 <div>
                     <Table
                         columns={columns}
-                        rowKey={record => record.login.uuid}
+                        rowKey={record => record.id}
                         dataSource={this.state.data}
-                        pagination={PagingConfiguration(totalCount, pageNo, pageSize,[10,30,50,100])}
+                        pagination={PagingConfiguration(totalCount, pageNum, pageSize,[10,30,50,100])}
                         loading={this.state.loading}
                         onChange={this.handleTableChange}
+                        scroll={{y: document.body.clientHeight - 306}}
                         bodyStyle={{height: "720px"}}
                         locale={{emptyText: null}}
                     />

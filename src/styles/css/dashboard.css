@@ -98,7 +98,7 @@ body {
   text-align: center;
 }
 .placeholders h4 {
-  margin-bottom: 0;
+  margin: 10px;
 }
 .placeholder {
   margin-bottom: 20px;
@@ -121,7 +121,7 @@ body {
 }
 
 .table-responsive .ant-pagination-total-text {
-  width: 500px;
+  width: 400px;
 }
 
 .ant-table {
