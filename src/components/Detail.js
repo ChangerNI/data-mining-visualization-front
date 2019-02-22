@@ -93,36 +93,7 @@ class Detail extends Component {
         myChart.setOption(option);
     }
 
-    showVegetables = () => {
-        this.setState({
-            productType: "vegetable"
-        })
-    }
-
-    showFruit = () => {
-        this.setState({
-            productType: "fruit"
-        })
-    }
-
-    showMeat = () => {
-        this.setState({
-            productType: "meat"
-        })
-
-    }
-
-    showAquatic = () => {
-        this.setState({
-            productType: "Aquatic"
-        })
-    }
-
-    showOil = () => {
-        this.setState({
-            productType: "oil"
-        })
-    }
+    
     render() {
         return (
             <div id="detail">
@@ -158,7 +129,7 @@ class Detail extends Component {
                             <h1 className="page-header">Dashboard</h1>
 
                             <div className="row placeholders">
-                                <div className="col-xs-6 col-sm-2 placeholder lists" onClick={this.showVegetables}>
+                                <div className="col-xs-6 col-sm-2 placeholder lists vegetables">
                                     <img
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         width="200" height="200" className="img-responsive"
@@ -166,7 +137,7 @@ class Detail extends Component {
                                         <h4>蔬菜</h4>
 
                                 </div>
-                                <div className="col-xs-6 col-sm-2 placeholder lists" onClick={this.showFruit}>
+                                <div className="col-xs-6 col-sm-2 placeholder lists fruit" >
                                     <img
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         width="200" height="200" className="img-responsive"
@@ -174,7 +145,7 @@ class Detail extends Component {
                                         <h4>水果</h4>
 
                                 </div>
-                                <div className="col-xs-6 col-sm-2 placeholder lists" onClick={this.showMeat}>
+                                <div className="col-xs-6 col-sm-2 placeholder lists meat" >
                                     <img
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         width="200" height="200" className="img-responsive"
@@ -182,7 +153,7 @@ class Detail extends Component {
                                         <h4>肉类</h4>
 
                                 </div>
-                                <div className="col-xs-6 col-sm-2 placeholder lists" onClick={this.showAquatic}>
+                                <div className="col-xs-6 col-sm-2 placeholder lists aquatic">
                                     <img
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         width="200" height="200" className="img-responsive"
@@ -190,7 +161,7 @@ class Detail extends Component {
                                         <h4>水产</h4>
 
                                 </div>
-                                <div className="col-xs-6 col-sm-2 placeholder lists" onClick={this.showOil}>
+                                <div className="col-xs-6 col-sm-2 placeholder lists oil">
                                     <img
                                         src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                                         width="200" height="200" className="img-responsive"
@@ -205,7 +176,7 @@ class Detail extends Component {
 
                             <h2 className="sub-header">Section title</h2>
                             <div className="table-responsive">
-                                <TableContent productType={this.state.productType} />
+                                <TableContent />
                             </div>
                         </div>
                     </div>

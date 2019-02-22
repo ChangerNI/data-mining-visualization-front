@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table,Pagination, LocaleProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import reqwest from 'reqwest';
+import $ from 'jquery';
 
 /* 分页的配置, 传入总条数, 页码, 页码条数*/
 const PagingConfiguration = (totalCount, pageNo, pageSize, pageSizeOptions) => ({
@@ -12,12 +13,7 @@ const PagingConfiguration = (totalCount, pageNo, pageSize, pageSizeOptions) => (
     current: pageNo,
     showSizeChanger: true,
     showQuickJumper: true,
-    pageSizeOptions: pageSizeOptions || [
-        "10",
-        "30",
-        "50",
-        "100"
-    ],
+    pageSizeOptions: pageSizeOptions,
     showTotal: () => <div>
         当前第 <span>{pageNo === 1 ? 1 : pageSize * (pageNo - 1)}</span> 到
         <span>{pageSize * pageNo >= totalCount ? totalCount : pageSize * pageNo}</span> 条，总共
@@ -56,18 +52,57 @@ const columns = [{
 }];
 
 class TableContent extends Component {
-    state = {
-        data: [],
-        pagination: {},
-        loading: false,
-        pageNum: 1,
-        pageSize: 10,
-        totalCount: ""
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+            pagination: {},
+            loading: false,
+            pageNum: parseInt("1"),
+            pageSize: parseInt("10"),
+            totalCount: "",
+            productType: "vegetable"
+        };
+    }
 
     componentDidMount() {
         this.fetch();
-        console.log(this.state.pagination);
+        $('.vegetables').click(
+            () => {
+                this.setState({
+                    productType: "vegetable"
+                });
+                this.fetch();
+            });
+        $('.fruit').click(
+            () => {
+            this.setState({
+                productType: "fruit"
+            });
+            this.fetch();
+        });
+        $('.meat').click(
+            () => {
+            this.setState({
+                productType: "meat"
+            });
+            this.fetch();
+        });
+        $('.oil').click(
+            () => {
+            this.setState({
+                productType: "oil"
+            });
+            this.fetch();
+        });
+        $('.aquatic').click(
+            () => {
+            this.setState({
+                productType: "aquatic"
+            });
+            this.fetch();
+        });
+        console.log(this.state.productType);
     }
 
     handleTableChange = (pagination, filters, sorter) => {
@@ -80,22 +115,20 @@ class TableContent extends Component {
         this.fetch({
             pageSize: pagination.pageSize,
             pageNum: pagination.current,
-            // sortField: sorter.field,
-            // sortOrder: sorter.order,
             ...filters,
         });
     }
 
     fetch = (params = {}) => {
-        this.setState({ loading: true });
+        this.setState({ loading: true});
         reqwest({
-            url: 'http://10.202.0.6:8080/data-mining/product/query',
+            url: 'http://10.202.0.7:8080/data-mining/product/query',
             method: 'post',
             // url: 'https://randomuser.me/api',
             // method: 'get',
             data: {
                 ...params,
-                productType: this.props.productType,
+                productType: this.state.productType,
             },
             type: 'json',
         }).then((data) => {
@@ -117,7 +150,7 @@ class TableContent extends Component {
 
     render() {
         const {totalCount,pageNum,pageSize} = this.state;
-        console.log(pageNum,pageSize);
+        console.log(pageNum,pageSize)
 
         return (
             <LocaleProvider locale={zhCN}>
