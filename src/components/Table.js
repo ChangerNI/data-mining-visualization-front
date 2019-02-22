@@ -58,8 +58,8 @@ class TableContent extends Component {
             data: [],
             pagination: {},
             loading: false,
-            pageNum: parseInt("1"),
-            pageSize: parseInt("10"),
+            pageNum: 1,
+            pageSize: 10,
             totalCount: "",
             productType: "vegetable"
         };
@@ -70,14 +70,16 @@ class TableContent extends Component {
         $('.vegetables').click(
             () => {
                 this.setState({
-                    productType: "vegetable"
+                    productType: "vegetable",
+                    pageNum: 1
                 });
                 this.fetch();
             });
         $('.fruit').click(
             () => {
             this.setState({
-                productType: "fruit"
+                productType: "fruit",
+                pageNum: 1
             });
             this.fetch();
         });
@@ -105,7 +107,7 @@ class TableContent extends Component {
         console.log(this.state.productType);
     }
 
-    handleTableChange = (pagination, filters, sorter) => {
+    handleTableChange = (pagination, filters) => {
         const pager = { ...this.state.pagination };
         pager.current = pagination.current;
         pager.pageSize = pagination.pageSize;
@@ -124,8 +126,6 @@ class TableContent extends Component {
         reqwest({
             url: 'http://10.202.0.7:8080/data-mining/product/query',
             method: 'post',
-            // url: 'https://randomuser.me/api',
-            // method: 'get',
             data: {
                 ...params,
                 productType: this.state.productType,
@@ -150,6 +150,13 @@ class TableContent extends Component {
 
     render() {
         const {totalCount,pageNum,pageSize} = this.state;
+        if(typeof(pageNum)!=="number"){
+            console.log('3333')
+            this.setState({
+                pageNum: 1,
+                pageSize: 10
+            })
+        }
         console.log(pageNum,pageSize)
 
         return (
