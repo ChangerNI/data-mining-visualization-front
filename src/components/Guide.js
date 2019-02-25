@@ -7,6 +7,7 @@ import {
 import Index from './Index';
 import Detail from './Detail';
 import Detail1 from './Detail1';
+import Detail2 from './Detail2';
 import '../styles/css/guide.css';
 import $ from 'jquery';
 import createHistory from 'history/createBrowserHistory';
@@ -15,10 +16,10 @@ const history = createHistory();
 class Guide extends Component {
     componentDidMount = () => {
         $('.type-left ul li').click(function(){
-            $(this).addClass('active').siblings('li').removeClass('active')
+            $(this).addClass('active').siblings('li').removeClass('active');
         })
         $('.type-right').click(function(){
-            $(this).prev('.type-left').toggleClass('showListType')
+            $(this).prev('.type-left').toggleClass('showListType');
         });
     }
 
@@ -32,7 +33,7 @@ class Guide extends Component {
                             <li className="active"><Link to="/index">首页</Link><span></span></li>
                             <li><Link to="/detail">detail1</Link><span></span></li>
                             <li><Link to="/detail1">detail2</Link><span></span></li>
-                            <li><Link to="/">detail3</Link><span></span></li>
+                            <li><Link to="/detail2">detail3</Link><span></span></li>
                         </ul>
                     </div>
                     <div className="type-right">
@@ -46,6 +47,7 @@ class Guide extends Component {
                     <Route exact path="/index" component={Index}/>
                     <Route path="/detail" component={Detail}/>
                     <Route path="/detail1" component={Detail1}/>
+                    <Route path="/detail2" component={Detail2}/>
                 </div>
             </div>
         </Router>

@@ -16,3 +16,24 @@
   height: 400px;
   border: 1px solid #ccc;
 }
+
+/*detail2样式*/
+.detail2 {
+  margin-top: 40px;
+}
+
+.detail2-echart {
+  height: 400px;
+  border: 1px solid #ccc;
+  overflow: auto;
+}
+
+.btn-request {
+  float: right;
+  margin: 20px 0;
+}
+
+.insert-data {
+  display: block;
+  margin: 8px;
+}
