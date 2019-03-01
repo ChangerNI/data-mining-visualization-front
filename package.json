@@ -6,6 +6,7 @@
     "antd": "^3.13.2",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.11.0",
+    "bee-table": "^1.6.44",
     "bootstrap": "^3.4.0",
     "echarts": "^4.1.0",
     "history": "^4.7.2",
