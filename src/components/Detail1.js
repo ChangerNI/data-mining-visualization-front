@@ -2,8 +2,33 @@ import React, { Component } from 'react';
 import {Select,Row,Col} from "antd";
 import '../../node_modules/antd/dist/antd.css';
 import '../styles/css/detail1.css'
+import qs from "qs";
+import axios from "axios/index";
 
 class Detail1 extends Component {
+    constructor (props) {
+
+        super(props);
+        this.state = {
+            productArray: [],
+        }
+    }
+
+    componentDidMount = () => {
+        this.queryProduct().then((result) => {
+
+            this.setState({productArray: result});
+            console.log(result);
+
+        });
+    }
+
+    queryProduct = async function () {
+        const result = axios.post('http://192.168.1.87:8080/data-mining/product/enum',qs.stringify({}));
+
+        return result;
+
+    }
 
   render() {
     return (

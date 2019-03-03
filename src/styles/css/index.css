@@ -37,5 +37,9 @@
 
 .four {
   height: 400px;
-  margin-left: 10px;
+  z-index: -1;
+}
+
+.active {
+  transform: translate(44.7%, 0px) scale(1)!important;
 }
