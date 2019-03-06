@@ -2,6 +2,10 @@
   margin-top: 100px;
 }
 
+.condition-wrapper .ant-row:first-child {
+  margin-bottom: 20px;
+}
+
 .query-lists {
   display: flex;
   flex-direction: row;

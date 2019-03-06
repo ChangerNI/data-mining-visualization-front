@@ -120,7 +120,7 @@ class Detail1 extends Component {
 
     handleTypeChange = (value) => {
         this.setState({
-            productType: ""
+            productType: this.state.productNames[value]
         });
     }
 
@@ -205,7 +205,7 @@ class Detail1 extends Component {
                 <Col span={4}>
 
                 </Col>
-            </Row>,
+            </Row>
             <Row>
                 <Col span={4}></Col>
                 <Col span={16} id="showPrice" className="detail-echart"></Col>
