@@ -12,9 +12,6 @@ import 'echarts/map/js/china';
 import '../styles/css/index.css';
 import {geoCoordMap} from '../config/data';
 import $ from 'jquery';
-import qs from "qs";
-import axios from "axios/index";
-
 
 
 class IndexItem extends Component {
@@ -28,7 +25,7 @@ class IndexItem extends Component {
 
 
     componentWillReceiveProps  = (nextProps) => {
-        const {vegetableType,vegetableValue} = nextProps;
+        const {vegetableType,vegetableValue,fruitType,fruitValue,oilType,oilValue,meatType,meatValue,aquaticType,aquaticValue} = nextProps;
         console.log(vegetableValue);
 
         //基于准备好的dom，初始化echarts实例
@@ -65,7 +62,11 @@ class IndexItem extends Component {
             xAxis : [
                 {
                     type : 'category',
-                    data : vegetableType
+                    data : vegetableType,
+                    axisLabel: {
+                        interval:0,
+                        rotate:40
+                    }
                 },
             ],
 
@@ -108,7 +109,7 @@ class IndexItem extends Component {
                 trigger: 'axis'
             },
             legend: {
-                data:['降水量']
+                data:['总量']
             },
             toolbox: {
                 show : true,
@@ -123,7 +124,11 @@ class IndexItem extends Component {
             xAxis : [
                 {
                     type : 'category',
-                    data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                    data : fruitType,
+                    axisLabel: {
+                        interval:0,
+                        rotate:40
+                    }
                 }
             ],
             yAxis : [
@@ -133,9 +138,9 @@ class IndexItem extends Component {
             ],
             series : [
                 {
-                    name:'降水量',
+                    name:'总量',
                     type:'bar',
-                    data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+                    data:fruitValue,
                     itemStyle: {
                         normal: {
                             color: '#87CEFA',
@@ -159,13 +164,13 @@ class IndexItem extends Component {
         var option_three = {
             title : {
                 text: '农产品数据',
-                subtext: '水果'
+                subtext: '肉类'
             },
             tooltip : {
                 trigger: 'axis'
             },
             legend: {
-                data:['降水量']
+                data:['总量']
             },
             toolbox: {
                 show : true,
@@ -180,7 +185,11 @@ class IndexItem extends Component {
             xAxis : [
                 {
                     type : 'category',
-                    data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                    data : meatType,
+                    axisLabel: {
+                        interval:0,
+                        rotate:40
+                    }
                 }
             ],
             yAxis : [
@@ -190,9 +199,9 @@ class IndexItem extends Component {
             ],
             series : [
                 {
-                    name:'降水量',
+                    name:'总量',
                     type:'bar',
-                    data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+                    data:meatValue,
                     itemStyle: {
                         normal: {
                             color: '#66CDAA',
@@ -216,13 +225,13 @@ class IndexItem extends Component {
         var option_five = {
             title : {
                 text: '农产品数据',
-                subtext: '水果'
+                subtext: '粮油'
             },
             tooltip : {
                 trigger: 'axis'
             },
             legend: {
-                data:['降水量']
+                data:['总量']
             },
             toolbox: {
                 show : true,
@@ -237,7 +246,11 @@ class IndexItem extends Component {
             xAxis : [
                 {
                     type : 'category',
-                    data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                    data : oilType,
+                    axisLabel: {
+                        interval:0,
+                        rotate:40
+                    }
                 }
             ],
             yAxis : [
@@ -247,9 +260,9 @@ class IndexItem extends Component {
             ],
             series : [
                 {
-                    name:'降水量',
+                    name:'总量',
                     type:'bar',
-                    data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+                    data:oilValue,
                     itemStyle: {
                         normal: {
                             color: '#00CED1',
@@ -273,13 +286,13 @@ class IndexItem extends Component {
         var option_six = {
             title : {
                 text: '农产品数据',
-                subtext: '水果'
+                subtext: '水产'
             },
             tooltip : {
                 trigger: 'axis'
             },
             legend: {
-                data:['降水量']
+                data:['总量']
             },
             toolbox: {
                 show : true,
@@ -294,7 +307,11 @@ class IndexItem extends Component {
             xAxis : [
                 {
                     type : 'category',
-                    data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                    data : aquaticType,
+                    axisLabel: {
+                        interval:0,
+                        rotate:40
+                    }
                 }
             ],
             yAxis : [
@@ -304,9 +321,9 @@ class IndexItem extends Component {
             ],
             series : [
                 {
-                    name:'降水量',
+                    name:'总量',
                     type:'bar',
-                    data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+                    data:aquaticValue,
                     itemStyle: {
                         normal: {
                             color: '#66CDAA',
@@ -515,9 +532,174 @@ class IndexItem extends Component {
         myChart_five.setOption(option_five);
         myChart_six.setOption(option_six);
 
-        $('.one').click(() =>{
-            $(".one").addClass("active");
+        $('#one').click(() =>{
+            $("#one").addClass("active");
+            if($("#main").hasClass("active")){
+                $("#main").removeClass("active");
+                $(".main").addClass("one");
+            }else if($("#two").hasClass("active")){
+                $("#two").removeClass("active");
+                $(".two").addClass("one");
+            }else if($("#three").hasClass("active")){
+                $("#three").removeClass("active");
+                $(".three").addClass("one");
+            }else if($("#four").hasClass("active")){
+                $("#four").removeClass("active");
+                $(".four").addClass("one");
+            }else if($("#five").hasClass("active")){
+                $("#five").removeClass("active");
+                $(".five").addClass("one");
+            }else if($("#six").hasClass("active")){
+                $("#six").removeClass("active");
+                $(".six").addClass("one");
+            }
         })
+
+        $('#two').click(() =>{
+            $("#two").addClass("active");
+            if($("#main").hasClass("active")){
+                $("#main").removeClass("active");
+                $(".main").addClass("two");
+            }else if($("#one").hasClass("active")){
+                $("#one").removeClass("active");
+                $(".one").addClass("two");
+            }else if($("#three").hasClass("active")){
+                $("#three").removeClass("active");
+                $(".three").addClass("two");
+            }else if($("#four").hasClass("active")){
+                $("#four").removeClass("active");
+                $(".four").addClass("two");
+            }else if($("#five").hasClass("active")){
+                $("#five").removeClass("active");
+                $(".five").addClass("two");
+            }else if($("#six").hasClass("active")){
+                $("#six").removeClass("active");
+                $(".six").addClass("two");
+            }
+
+        })
+
+        $('#three').click(() =>{
+            $("#three").addClass("active");
+            if($("#main").hasClass("active")){
+                $("#main").removeClass("active");
+                $(".main").addClass("three");
+            }else if($("#one").hasClass("active")){
+                $("#one").removeClass("active");
+                $(".one").addClass("three");
+            }else if($("#two").hasClass("active")){
+                $("#two").removeClass("active");
+                $(".two").addClass("three");
+            }else if($("#four").hasClass("active")){
+                $("#four").removeClass("active");
+                $(".four").addClass("three");
+            }else if($("#five").hasClass("active")){
+                $("#five").removeClass("active");
+                $(".five").addClass("three");
+            }else if($("#six").hasClass("active")){
+                $("#six").removeClass("active");
+                $(".six").addClass("three");
+            }
+
+        })
+
+        $('#four').click(() =>{
+            $("#four").addClass("active");
+            if($("#main").hasClass("active")){
+                $("#main").removeClass("active");
+                $(".main").addClass("four");
+            }else if($("#one").hasClass("active")){
+                $("#one").removeClass("active");
+                $(".one").addClass("four");
+            }else if($("#three").hasClass("active")){
+                $("#three").removeClass("active");
+                $(".three").addClass("four");
+            }else if($("#two").hasClass("active")){
+                $("#two").removeClass("active");
+                $(".two").addClass("four");
+            }else if($("#five").hasClass("active")){
+                $("#five").removeClass("active");
+                $(".five").addClass("four");
+            }else if($("#six").hasClass("active")){
+                $("#six").removeClass("active");
+                $(".six").addClass("four");
+            }
+
+        })
+
+        $('#five').click(() =>{
+            $("#five").addClass("active");
+            if($("#main").hasClass("active")){
+                $("#main").removeClass("active");
+                $(".main").addClass("five");
+            }else if($("#one").hasClass("active")){
+                $("#one").removeClass("active");
+                $(".one").addClass("five");
+            }else if($("#three").hasClass("active")){
+                $("#three").removeClass("active");
+                $(".three").addClass("five");
+            }else if($("#four").hasClass("active")){
+                $("#four").removeClass("active");
+                $(".four").addClass("five");
+            }else if($("#two").hasClass("active")){
+                $("#two").removeClass("active");
+                $(".two").addClass("five");
+            }else if($("#six").hasClass("active")){
+                $("#six").removeClass("active");
+                $(".six").addClass("five");
+            }
+
+        })
+
+        $('#six').click(() =>{
+            $("#six").addClass("active");
+            if($("#main").hasClass("active")){
+                $("#main").removeClass("active");
+                $(".main").addClass("six");
+            }else if($("#one").hasClass("active")){
+                $("#one").removeClass("active");
+                $(".one").addClass("six");
+            }else if($("#three").hasClass("active")){
+                $("#three").removeClass("active");
+                $(".three").addClass("six");
+            }else if($("#four").hasClass("active")){
+                $("#four").removeClass("active");
+                $(".four").addClass("six");
+            }else if($("#five").hasClass("active")){
+                $("#five").removeClass("active");
+                $(".five").addClass("six");
+            }else if($("#two").hasClass("active")){
+                $("#two").removeClass("active");
+                $(".two").addClass("six");
+            }
+
+        })
+
+        $('#main').click(() =>{
+            $("#main").addClass("active");
+            if($("#two").hasClass("active")){
+                $("#two").removeClass("active");
+                $(".two").addClass("main");
+            }else if($("#one").hasClass("active")){
+                $("#one").removeClass("active");
+                $(".one").addClass("main");
+            }else if($("#three").hasClass("active")){
+                $("#three").removeClass("active");
+                $(".three").addClass("main");
+            }else if($("#four").hasClass("active")){
+                $("#four").removeClass("active");
+                $(".four").addClass("main");
+            }else if($("#five").hasClass("active")){
+                $("#five").removeClass("active");
+                $(".five").addClass("main");
+            }else if($("#six").hasClass("active")){
+                $("#six").removeClass("active");
+                $(".six").addClass("main");
+            }
+
+        })
+
+
     }
 
 
@@ -525,12 +707,13 @@ class IndexItem extends Component {
         return (
             <div id="index" className="index">
                 <div className="column">
-                    <div id="one" className="one list" style={{"transform": "translate(-22.4%, -33.5%) scale(0.33)"}}>1</div>
-                    <div id="two" className="two list" style={{"transform": "translate(-22.4%, 0.5%) scale(0.33)"}}>2</div>
-                    <div id="three" className="three list" style={{"transform": "translate(-22.4%, 34.5%) scale(0.33)"}}>3</div>
-                    <div id="five" className="three list" style={{"transform": "translate(-22.4%, 68.5%) scale(0.33)"}}>3</div>
-                    <div id="six" className="three list" style={{"transform": "translate(44.7%, 68%) scale(1,0.33)"}}>3</div>
-                    <div id="four" className="four list" style={{"transform": "translate(44.7%, 0px) scale(1)"}}>4</div>
+                    <div id="six" className="one list" style={{"transform": "translate(19.7%, 68%) scale(0.49,0.33)"}}></div>
+                    <div id="two" className="two list" style={{"transform": "translate(-22.4%, 0.5%) scale(0.33)"}}></div>
+                    <div id="three" className="three list" style={{"transform": "translate(-22.4%, 34.5%) scale(0.33)"}}></div>
+                    <div id="five" className="five list" style={{"transform": "translate(-22.4%, 68.5%) scale(0.33)"}}></div>
+                    <div id="one" className="six list" style={{"transform": "translate(-22.4%, -33.5%) scale(0.33)"}}></div>
+                    <div id="four" className="four list" style={{"transform": "translate(69.7%, 68%) scale(0.49,0.33)"}}></div>
+                    <div id="main" className="main list active" style={{"transform":"translate(44.7%, 0px) scale(1)"}}></div>
                 </div>
             </div>
         );
