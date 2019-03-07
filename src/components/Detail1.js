@@ -173,6 +173,7 @@ class Detail1 extends Component {
                                 width: 116,
                                 marginRight: 15
                             }}
+                            value={""}
                             showSearch
                             onChange={this.handleNameChange}
                             allowClear={false}
