@@ -73,7 +73,16 @@
         socket.onmessage = function(message) {
             let info = JSON.stringify(message);
             $('#log-cat').append("<span class='insert-data'>"+JSON.parse(info).data+"</span>");
-            console.log(JSON.parse(info));
+            let num = JSON.parse(info).data.substring(26,28);
+            if(num){
+                let pro = 100/num;
+                for(let i=1;i<num;i++){
+                    pro = pro + 100/num;
+                    $('#progress').css('width',pro+"%");
+                    $('#progress-value').text(pro + "%");
+                }
+            }
+            console.log(num.substring(26,28));
         };
         //关闭事件
         socket.onclose = function() {

@@ -86,6 +86,20 @@ body {
 
 .lists {
   margin: 0 15px !important;
+  cursor: pointer;
+}
+
+.lists h4:hover {
+  color: rgba(0,0,255,0.4);
+}
+
+.lists img {
+  border-radius: 50%;
+  border: 1px solid #EEEEE0;
+}
+
+.lists img:hover {
+  background: rgba(193,255,193,0.4);
 }
 
 

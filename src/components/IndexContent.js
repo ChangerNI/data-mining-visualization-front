@@ -22,14 +22,16 @@ class IndexContent extends Component {
         }
     }
 
-    componentDidMount() {
+    componentWillReceiveProps  = (nextProps) => {
+        const {vegetableType,vegetableValue,fruitType,fruitValue,oilType,oilValue,meatType,meatValue,aquaticType,aquaticValue} = nextProps;
+
         this.echarts_1();
-        this.echarts_2();
+        this.echarts_2(aquaticType,aquaticValue);
         this.map();
-        this.echarts_3();
-        this.echarts_4();
-        this.echarts_5();
-        this.echarts_6();
+        this.echarts_3(vegetableType,vegetableValue);
+        this.echarts_4(fruitType,fruitValue);
+        this.echarts_5(oilType,oilValue);
+        this.echarts_6(meatType,meatValue);
     }
 
     echarts_1 = () => {
@@ -37,11 +39,11 @@ class IndexContent extends Component {
         var myChart_1 = echarts.init(document.getElementById('echarts_1'));
 
         var data = [
-            {value: 12,name: '行业一'},
-            {value: 13,name: '行业二'},
-            {value: 70,name: '行业三'},
-            {value: 52,name: '行业四'},
-            {value: 35,name: '行业五'}
+            {value: 12,name: '水产'},
+            {value: 13,name: '粮油'},
+            {value: 70,name: '蔬菜'},
+            {value: 52,name: '水果'},
+            {value: 35,name: '肉禽蛋'}
         ];
 
         var option_1 = {
@@ -59,7 +61,7 @@ class IndexContent extends Component {
                 itemWidth: 10,
                 itemHeight: 10,
                 icon: 'rect',
-                data: ['行业一', '行业二', '行业三', '行业四', '行业五'],
+                data: ['水产', '粮油', '蔬菜', '水果', '肉禽蛋'],
                 textStyle: {
                     color: [],
                     fontStyle: 'normal',
@@ -128,158 +130,161 @@ class IndexContent extends Component {
             myChart_1.resize();
         });
     }
-    echarts_2 = () => {
+    echarts_2 = (aquaticType,aquaticValue) => {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echarts_2'));
 
+        var xData = function() {
+            var data = aquaticType;
+
+            return data;
+        }();
+
+        var data = aquaticValue;
+
         var option = {
-            backgroundColor: 'rgba(0,0,0,0)',
+            // backgroundColor: "#141f56",
+
             tooltip: {
+                show: "true",
                 trigger: 'item',
-                formatter: "{b}  <br/>{c}辆"
+                backgroundColor: 'rgba(0,0,0,0.4)', // 背景
+                padding: [8, 10], //内边距
+                // extraCssText: 'box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);', //添加阴影
+                formatter: function(params) {
+                    if (params.seriesName !== "") {
+                        return params.name + ' ：  ' + params.value + ' 辆';
+                    }
+                },
+
             },
-            legend: {
-                x: 'center',
-                y: '2%',
-                data: ['车型一', '车型二', '车型三', '车型四', '车型五'],
-                icon: 'circle',
+            grid: {
+                borderWidth: 0,
+                top: 20,
+                bottom: 35,
+                left:55,
+                right:30,
                 textStyle: {
-                    color: '#fff',
+                    color: "#fff"
                 }
             },
-            calculable: true,
+            xAxis: [{
+                type: 'category',
+
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#363e83',
+                    }
+                },
+                axisLabel: {
+                    inside: false,
+                    textStyle: {
+                        color: '#bac0c0',
+                        fontWeight: 'normal',
+                        fontSize: '12',
+                    },
+                    // formatter:function(val){
+                    //     return val.split("").join("\n")
+                    // },
+                },
+                data: xData,
+            }, {
+                type: 'category',
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    show: false
+                },
+                splitArea: {
+                    show: false
+                },
+                splitLine: {
+                    show: false
+                },
+                data: xData,
+            }],
+            yAxis: {
+                type: 'value',
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#32346c',
+                    }
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#32346c ',
+                    }
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: '#bac0c0',
+                        fontWeight: 'normal',
+                        fontSize: '12',
+                    },
+                    formatter: '{value}',
+                },
+            },
             series: [{
-                name: '车型',
-                type: 'pie',
-                //起始角度，支持范围[0, 360]
-                startAngle: 0,
-                //饼图的半径，数组的第一项是内半径，第二项是外半径
-                radius: [41, 110],
-                //支持设置成百分比，设置成百分比时第一项是相对于容器宽度，第二项是相对于容器高度
-                center: ['50%', '20%'],
-                //是否展示成南丁格尔图，通过半径区分数据大小。可选择两种模式：
-                // 'radius' 面积展现数据的百分比，半径展现数据的大小。
-                //  'area' 所有扇区面积相同，仅通过半径展现数据大小
-                roseType: 'area',
-                //是否启用防止标签重叠策略，默认开启，圆环图这个例子中需要强制所有标签放在中心位置，可以将该值设为 false。
-                avoidLabelOverlap: false,
-                label: {
+                // name: '生师比(%)',
+                type: 'bar',
+                itemStyle: {
                     normal: {
                         show: true,
-                        formatter: '{c}辆'
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: '#00c0e9'
+                        }, {
+                            offset: 1,
+                            color: '#3b73cf'
+                        }]),
+                        barBorderRadius: 50,
+                        borderWidth: 0,
                     },
                     emphasis: {
-                        show: true
+                        shadowBlur: 15,
+                        shadowColor: 'rgba(105,123, 214, 0.7)'
                     }
                 },
-                labelLine: {
-                    normal: {
-                        show: true,
-                        length2: 1,
-                    },
-                    emphasis: {
-                        show: true
-                    }
-                },
-                data: [{
-                    value: 600,
-                    name: '车型一',
+                zlevel: 2,
+                barWidth: '20%',
+                data: data,
+            },
+                {
+                    name: '',
+                    type: 'bar',
+                    xAxisIndex: 1,
+                    zlevel: 1,
                     itemStyle: {
                         normal: {
-                            color: '#f845f1'
-                        }
-                    }
-                },
-                    {
-                        value: 1100,
-                        name: '车型二',
-                        itemStyle: {
-                            normal: {
-                                color: '#ad46f3'
-                            }
+                            color: '#121847',
+                            borderWidth: 0,
+                            shadowBlur: {
+                                shadowColor: 'rgba(255,255,255,0.31)',
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowOffsetY: 2,
+                            },
                         }
                     },
-                    {
-                        value: 1200,
-                        name: '车型三',
-                        itemStyle: {
-                            normal: {
-                                color: '#5045f6'
-                            }
-                        }
-                    },
-                    {
-                        value: 1300,
-                        name: '车型四',
-                        itemStyle: {
-                            normal: {
-                                color: '#4777f5'
-                            }
-                        }
-                    },
-                    {
-                        value: 1400,
-                        name: '车型五',
-                        itemStyle: {
-                            normal: {
-                                color: '#44aff0'
-                            }
-                        }
-                    },
+                    barWidth: '20%',
+                    data: [30, 30, 30, 30, 30]
+                }
+            ]
+        }
 
-                    {
-                        value: 0,
-                        name: "",
-                        label: {
-                            show: false
-                        },
-                        labelLine: {
-                            show: false
-                        }
-                    },
-                    {
-                        value: 0,
-                        name: "",
-                        label: {
-                            show: false
-                        },
-                        labelLine: {
-                            show: false
-                        }
-                    },
-                    {
-                        value: 0,
-                        name: "",
-                        label: {
-                            show: false
-                        },
-                        labelLine: {
-                            show: false
-                        }
-                    },
-                    {
-                        value: 0,
-                        name: "",
-                        label: {
-                            show: false
-                        },
-                        labelLine: {
-                            show: false
-                        }
-                    },
-                    {
-                        value: 0,
-                        name: "",
-                        label: {
-                            show: false
-                        },
-                        labelLine: {
-                            show: false
-                        }
-                    }
-                ]
-            }]
-        };
 
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
@@ -584,7 +589,7 @@ class IndexContent extends Component {
             myChart.resize();
         });
     }
-    echarts_3 = () => {
+    echarts_3 = (vegetableType,vegetableValue) => {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echarts_3'));
 
@@ -657,8 +662,7 @@ class IndexContent extends Component {
                         }
 
                     },
-                    data: ['0时','1时','2时','3时','4时','5时','6时','7时','8时','9时','10时','11时','12时','13时','14时','15时','16时','17时'
-                        ,'18时','19时','20时','21时','22时','23时']
+                    data: vegetableType
                 }
             ],
             yAxis : {
@@ -703,7 +707,7 @@ class IndexContent extends Component {
                     itemStyle: {
                         normal: {areaStyle: {type: 'default'}}
                     },
-                    data:[710, 312, 321,754, 500, 830, 710, 521, 504, 660, 530, 410,710, 312, 321,754, 500, 830, 710, 521, 504, 660, 530, 410]
+                    data:vegetableValue
                 }
             ]
         };
@@ -714,70 +718,17 @@ class IndexContent extends Component {
             myChart.resize();
         });
     }
-    echarts_4 = () => {
+    echarts_4 = (fruitType,fruitValue) => {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echarts_4'));
 
-        var option = {
-
-            tooltip : {
-                trigger: 'item',
-                formatter: "{b}: <br/>  {c} ({d}%)"
-            },
-
-            toolbox: {
-                show : false,
-                feature : {
-                    mark : {show: true},
-                    dataView : {show: true, readOnly: false},
-                    magicType : {
-                        show: true,
-                        type: ['pie', 'funnel']
-                    },
-                    restore : {show: true},
-                    saveAsImage : {show: true}
-                }
-            },
-            calculable : true,
-            series : [
-
-                {
-                    name:'排名',
-                    type:'pie',
-                    color: ['#af89d6', '#f5c847', '#ff999a', '#0089ff','#25f3e6'],
-                    radius : [20, 100],
-                    center : ['50%', '50%'],
-                    roseType : 'area',
-                    data:[
-                        {value:70, name:'NO.4'},
-                        {value:90, name:'NO.3'},
-                        {value:110, name:'NO.2'},
-                        {value:150, name:'NO.1'},
-                        {value:40, name:'NO.5'}
-
-                    ]
-                }
-            ]
-        };
-
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-        window.addEventListener("resize",function(){
-            myChart.resize();
-        });
-    }
-    echarts_5 = () => {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts_5'));
-
         var xData = function() {
-            var data = ['NO.1','NO.2','NO.3','NO.4','NO.5'];
+            var data = fruitType;
 
             return data;
         }();
 
-        var data = [28, 22, 20, 16, 12]
+        var data = fruitValue;
 
         var option = {
             // backgroundColor: "#141f56",
@@ -824,6 +775,8 @@ class IndexContent extends Component {
                         fontWeight: 'normal',
                         fontSize: '12',
                     },
+                    interval:0,
+                    rotate:24
                     // formatter:function(val){
                     //     return val.split("").join("\n")
                     // },
@@ -929,211 +882,329 @@ class IndexContent extends Component {
             myChart.resize();
         });
     }
-    echarts_6 = () => {
+    echarts_5 = (oilType,oilValue) => {
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts_6'));
+        var myChart = echarts.init(document.getElementById('echarts_5'));
 
-        var data = {
-            "chart": [{
-                month: "NO.1",
-                value: 600,
+        var xData = function() {
+            var data = oilType;
 
-            },
+            return data;
+        }();
 
-                {
-                    month: "NO.2",
-                    value: 500,
-
-                },
-
-                {
-                    month: "NO.3",
-                    value: 614,
-
-                },
-
-                {
-                    month: "NO.4",
-                    value: 442,
-
-                },
-
-                {
-                    month: "NO.5",
-                    value: 322
-
-                }
-
-            ]
-        }
-
-
-        var xAxisMonth = [],
-            barData = [],
-            lineData = [];
-        for (var i = 0; i < data.chart.length; i++) {
-            xAxisMonth.push(data.chart[i].month);
-            barData.push({
-                "name": xAxisMonth[i],
-                "value": data.chart[i].value
-            });
-            lineData.push({
-                "name": xAxisMonth[i],
-                "value": data.chart[i].ratio
-            });
-        }
+        var data = oilValue;
 
         var option = {
-            // backgroundColor: "#020d22",
-            title: '',
-            grid: {
-                top: '10%',
-                left: '18%',
-                bottom: '3%',
-                right:'5%',
-                containLabel: true
-            },
+            // backgroundColor: "#141f56",
+
             tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'none'
-                },
+                show: "true",
+                trigger: 'item',
+                backgroundColor: 'rgba(0,0,0,0.4)', // 背景
+                padding: [8, 10], //内边距
+                // extraCssText: 'box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);', //添加阴影
                 formatter: function(params) {
-                    return params[0]["data"].name + "<br/>" + '报警次数: ' + params[1]["data"].value+'次' ;
+                    if (params.seriesName !== "") {
+                        return params.name + ' ：  ' + params.value + ' 辆';
+                    }
+                },
+
+            },
+            grid: {
+                borderWidth: 0,
+                top: 20,
+                bottom: 35,
+                left:55,
+                right:30,
+                textStyle: {
+                    color: "#fff"
                 }
             },
             xAxis: [{
                 type: 'category',
-                show: false,
-                data: ['NO.1', 'NO.2', 'NO.3', 'NO.4', 'NO.5'],
+
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#363e83',
+                    }
+                },
+                axisLabel: {
+                    inside: false,
+                    textStyle: {
+                        color: '#bac0c0',
+                        fontWeight: 'normal',
+                        fontSize: '12',
+                    },
+                    interval:0,
+                    rotate:24
+                    // formatter:function(val){
+                    //     return val.split("").join("\n")
+                    // },
+                },
+                data: xData,
+            }, {
+                type: 'category',
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    show: false
+                },
+                splitArea: {
+                    show: false
+                },
+                splitLine: {
+                    show: false
+                },
+                data: xData,
+            }],
+            yAxis: {
+                type: 'value',
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#32346c',
+                    }
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#32346c ',
+                    }
+                },
                 axisLabel: {
                     textStyle: {
-                        color: '#b6b5ab'
-                    }
-                }
+                        color: '#bac0c0',
+                        fontWeight: 'normal',
+                        fontSize: '12',
+                    },
+                    formatter: '{value}',
+                },
             },
-                {
-                    type: 'category',
-                    position: "bottom",
-                    data: xAxisMonth,
-                    boundaryGap: true,
-                    // offset: 40,
-                    splitLine: {
-                        show: false,
-                        lineStyle: {
-                            color: "rgba(255,255,255,0.2)"
-                        }
-                    },
-                    axisTick: {
-                        show: false
-                    },
-                    axisLine: {
-                        show: true,
-                        color: "rgba(255,255,255,0.2)"
-                    },
-                    axisLabel: {
-                        textStyle: {
-                            color: '#b6b5ab'
-                        }
-                    }
-                }
-
-            ],
-            yAxis: [{
-                show: true,
-                offset: 52,
-                splitLine: {
-                    show: false,
-                    lineStyle: {
-                        color: "rgba(255,255,255,0.2)"
-                    }
-                },
-                axisTick: {
-                    show: false
-                },
-                axisLine: {
-                    show: true,
-                    color: "rgba(255,255,255,0.2)"
-                },
-                axisLabel: {
-                    show: true,
-                    color: '#b6b5ab'
-                }
-            }, {
-                show: false,
-                type: "value",
-                // name: "合格率(%)",
-                nameTextStyle: {
-                    color: '#ccc'
-                },
-                axisLabel: {
-                    color: '#ccc'
-                },
-                splitLine: {
-                    show: false
-                },
-                axisLine: {
-                    show: true
-                },
-                axisTick: {
-                    show: true
-                }
-            }],
-            color: ['#e54035'],
             series: [{
-                name: '训练人次',
-                type: 'pictorialBar',
-                xAxisIndex: 1,
-                barCategoryGap: '-80%',
-                // barCategoryGap: '-5%',
-                symbol: 'path://d="M150 50 L130 130 L170 130  Z"',
+                // name: '生师比(%)',
+                type: 'bar',
                 itemStyle: {
                     normal: {
-                        color: function(params) {
-                            var colorList = [
-                                'rgba(13,177,205,0.8)', 'rgba(29,103,182,0.6)',
-                                'rgba(13,177,205,0.8)', 'rgba(29,103,182,0.6)',
-                                'rgba(13,177,205,0.8)', 'rgba(29,103,182,0.6)'
-                            ];
-                            return colorList[params.dataIndex];
-                        }
+                        show: true,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: '#00c0e9'
+                        }, {
+                            offset: 1,
+                            color: '#3b73cf'
+                        }]),
+                        barBorderRadius: 50,
+                        borderWidth: 0,
                     },
                     emphasis: {
-                        opacity: 1
+                        shadowBlur: 15,
+                        shadowColor: 'rgba(105,123, 214, 0.7)'
                     }
                 },
-                data: barData,
+                zlevel: 2,
+                barWidth: '20%',
+                data: data,
             },
                 {
-                    symbol: 'image://data:image/png;base64,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',
-                    symbolSize: 42,
-                    name: "完成率",
-                    type: "line",
-                    yAxisIndex: 1,
-                    data: lineData,
+                    name: '',
+                    type: 'bar',
+                    xAxisIndex: 1,
+                    zlevel: 1,
                     itemStyle: {
                         normal: {
-                            borderWidth: 5,
-                            color: {
-                                colorStops: [{
-                                    offset: 0,
-                                    color: '#821eff'
-                                },
-
-                                    {
-                                        offset: 1,
-                                        color: '#204fff'
-                                    }
-                                ],
-                            }
+                            color: '#121847',
+                            borderWidth: 0,
+                            shadowBlur: {
+                                shadowColor: 'rgba(255,255,255,0.31)',
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowOffsetY: 2,
+                            },
                         }
-                    }
+                    },
+                    barWidth: '20%',
+                    data: [30, 30, 30, 30, 30]
                 }
             ]
         }
 
 
-        // 使用刚指定的配置项和数据显示图表
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        window.addEventListener("resize",function(){
+            myChart.resize();
+        });
+    }
+    echarts_6 = (meatType,meatValue) => {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echarts_6'));
+
+        var xData = function() {
+            var data = meatType;
+
+            return data;
+        }();
+
+        var data = meatValue;
+
+        var option = {
+            // backgroundColor: "#141f56",
+
+            tooltip: {
+                show: "true",
+                trigger: 'item',
+                backgroundColor: 'rgba(0,0,0,0.4)', // 背景
+                padding: [8, 10], //内边距
+                // extraCssText: 'box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);', //添加阴影
+                formatter: function(params) {
+                    if (params.seriesName !== "") {
+                        return params.name + ' ：  ' + params.value + ' 辆';
+                    }
+                },
+
+            },
+            grid: {
+                borderWidth: 0,
+                top: 20,
+                bottom: 35,
+                left:55,
+                right:30,
+                textStyle: {
+                    color: "#fff"
+                }
+            },
+            xAxis: [{
+                type: 'category',
+
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#363e83',
+                    }
+                },
+                axisLabel: {
+                    inside: false,
+                    textStyle: {
+                        color: '#bac0c0',
+                        fontWeight: 'normal',
+                        fontSize: '12',
+                    },
+                    interval:0,
+                    rotate:24
+                    // formatter:function(val){
+                    //     return val.split("").join("\n")
+                    // },
+                },
+                data: xData,
+            }, {
+                type: 'category',
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    show: false
+                },
+                splitArea: {
+                    show: false
+                },
+                splitLine: {
+                    show: false
+                },
+                data: xData,
+            }],
+            yAxis: {
+                type: 'value',
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#32346c',
+                    }
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#32346c ',
+                    }
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: '#bac0c0',
+                        fontWeight: 'normal',
+                        fontSize: '12',
+                    },
+                    formatter: '{value}',
+                },
+            },
+            series: [{
+                // name: '生师比(%)',
+                type: 'bar',
+                itemStyle: {
+                    normal: {
+                        show: true,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: '#00c0e9'
+                        }, {
+                            offset: 1,
+                            color: '#3b73cf'
+                        }]),
+                        barBorderRadius: 50,
+                        borderWidth: 0,
+                    },
+                    emphasis: {
+                        shadowBlur: 15,
+                        shadowColor: 'rgba(105,123, 214, 0.7)'
+                    }
+                },
+                zlevel: 2,
+                barWidth: '20%',
+                data: data,
+            },
+                {
+                    name: '',
+                    type: 'bar',
+                    xAxisIndex: 1,
+                    zlevel: 1,
+                    itemStyle: {
+                        normal: {
+                            color: '#121847',
+                            borderWidth: 0,
+                            shadowBlur: {
+                                shadowColor: 'rgba(255,255,255,0.31)',
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowOffsetY: 2,
+                            },
+                        }
+                    },
+                    barWidth: '20%',
+                    data: [30, 30, 30, 30, 30]
+                }
+            ]
+        }
+
+
+        // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
         window.addEventListener("resize",function(){
             myChart.resize();
@@ -1164,8 +1235,8 @@ class IndexContent extends Component {
                                                             <img src={require("../styles/img/info-img-1.png")} alt=""/>
                                                         </div>
                                                         <div className="info-text fl">
-                                                            <p>车辆总数(辆)</p>
-                                                            <p>12,457</p>
+                                                            <p>蔬菜</p>
+                                                            <p>44,965,999</p>
                                                         </div>
                                                     </div>
                                                     <div className="info-2">
@@ -1173,8 +1244,8 @@ class IndexContent extends Component {
                                                             <img src={require("../styles/img/info-img-2.png")} alt=""/>
                                                         </div>
                                                         <div className="info-text fl">
-                                                            <p>当前在线数(辆)</p>
-                                                            <p>12,457</p>
+                                                            <p>水果</p>
+                                                            <p>12,320,000</p>
                                                         </div>
                                                     </div>
                                                     <div className="info-3">
@@ -1182,8 +1253,8 @@ class IndexContent extends Component {
                                                             <img src={require("../styles/img/info-img-3.png")} alt=""/>
                                                         </div>
                                                         <div className="info-text fl">
-                                                            <p>今日活跃数(辆)</p>
-                                                            <p>12,457</p>
+                                                            <p>肉禽蛋</p>
+                                                            <p>818,530</p>
                                                         </div>
                                                     </div>
                                                     <div className="info-4">
@@ -1191,14 +1262,23 @@ class IndexContent extends Component {
                                                             <img src={require("../styles/img/info-img-4.png")} alt=""/>
                                                         </div>
                                                         <div className="info-text fl">
-                                                            <p>今日活跃率(%)</p>
-                                                            <p>83</p>
+                                                            <p>淡水鱼</p>
+                                                            <p>261,400</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="info-4">
+                                                        <div className="info-img fl">
+                                                            <img src={require("../styles/img/info-img-4.png")} alt=""/>
+                                                        </div>
+                                                        <div className="info-text fl">
+                                                            <p>粮油</p>
+                                                            <p>496,160</p>
                                                         </div>
                                                     </div>
                                                 </div>
                             </div>
                             <div className="top-bottom">
-                                <div className="title">行业分类</div>
+                                <div className="title">农产品分类</div>
                                 <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
                                     <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
                                         <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
@@ -1207,7 +1287,7 @@ class IndexContent extends Component {
                             </div>
                         </div>
                         <div className="left-bottom">
-                            <div className="title">车型分类</div>
+                            <div className="title">水产</div>
                             <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
                                 <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
                                     <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
@@ -1218,7 +1298,7 @@ class IndexContent extends Component {
                     <div className="con-center fl">
                         <div className="cen-top" id="map"></div>
                         <div className="cen-bottom">
-                            <div className="title">车辆充电高峰时间</div>
+                            <div className="title">蔬菜</div>
                             <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
                                 <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
                                     <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
@@ -1228,7 +1308,7 @@ class IndexContent extends Component {
                     </div>
                     <div className="con-right fr">
                         <div className="right-top">
-                            <div className="title">本月行驶里程TOP5</div>
+                            <div className="title">水果</div>
                             <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
                                 <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
                                     <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
@@ -1236,7 +1316,7 @@ class IndexContent extends Component {
                                             <div id="echarts_4" className="charts"></div>
                         </div>
                         <div className="right-center">
-                            <div className="title">报警车辆TOP5</div>
+                            <div className="title">粮油</div>
                             <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
                                 <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
                                     <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
@@ -1244,7 +1324,7 @@ class IndexContent extends Component {
                                             <div id="echarts_5" className="charts"></div>
                         </div>
                         <div className="right-bottom">
-                            <div className="title">电池报警车辆TOP10</div>
+                            <div className="title">肉禽类</div>
                             <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
                                 <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
                                     <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>

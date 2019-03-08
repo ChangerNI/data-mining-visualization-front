@@ -93,7 +93,7 @@ class Detail extends Component {
         myChart.setOption(option);
     }
 
-    
+
     render() {
         return (
             <div id="detail">
@@ -131,7 +131,7 @@ class Detail extends Component {
                             <div className="row placeholders">
                                 <div className="col-xs-6 col-sm-2 placeholder lists vegetables">
                                     <img
-                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                                        src={require("../styles/img/vegetable.png")}
                                         width="200" height="200" className="img-responsive"
                                         alt="Generic placeholder thumbnail" />
                                         <h4>蔬菜</h4>
@@ -139,7 +139,7 @@ class Detail extends Component {
                                 </div>
                                 <div className="col-xs-6 col-sm-2 placeholder lists fruit" >
                                     <img
-                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                                        src={require("../styles/img/fruit.png")}
                                         width="200" height="200" className="img-responsive"
                                         alt="Generic placeholder thumbnail" />
                                         <h4>水果</h4>
@@ -147,7 +147,7 @@ class Detail extends Component {
                                 </div>
                                 <div className="col-xs-6 col-sm-2 placeholder lists meat" >
                                     <img
-                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                                        src={require("../styles/img/meat.png")}
                                         width="200" height="200" className="img-responsive"
                                         alt="Generic placeholder thumbnail" />
                                         <h4>肉类</h4>
@@ -155,7 +155,7 @@ class Detail extends Component {
                                 </div>
                                 <div className="col-xs-6 col-sm-2 placeholder lists aquatic">
                                     <img
-                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                                        src={require("../styles/img/aquatic.png")}
                                         width="200" height="200" className="img-responsive"
                                         alt="Generic placeholder thumbnail" />
                                         <h4>水产</h4>
@@ -163,7 +163,7 @@ class Detail extends Component {
                                 </div>
                                 <div className="col-xs-6 col-sm-2 placeholder lists oil">
                                     <img
-                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                                        src={require("../styles/img/oil.png")}
                                         width="200" height="200" className="img-responsive"
                                         alt="Generic placeholder thumbnail" />
                                     <h4>粮油</h4>

@@ -1,11 +1,11 @@
 html,body{
     height: 100%;
     width: 100%;
+    background: url('../img/map_bg.png') center;
 }
 .data{
     width: 100%;
     height: 100%;
-    background: url('../img/map_bg.png') center;
     min-width: 1366px;
 }
 .data>.data-title{
@@ -76,12 +76,12 @@ html,body{
 }
 .data>.data-content>.con-left>.left-top>.info>.info-main>div{
     width: 275px;
-    height: 25%;
+    height: 23%;
     background: url('../img/info-text.png') no-repeat;
-    margin: 8px auto;
+    margin: 0 auto;
 }
 .data>.data-content>.con-left>.left-top>.info>.info-main>div.info-1{
-    margin-top: 40px;
+    margin-top: 30px;
 }
 .data>.data-content>.con-left>.left-top>.info>.info-main .info-img{
     width: 100px;

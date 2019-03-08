@@ -92,3 +92,27 @@ s, i, em {
 .show {
     display: block;
 }
+
+.con-left .left-top .info {
+    height: 400px !important;
+}
+
+
+#echarts_4,
+#echarts_5,
+#echarts_6{
+    height: 240px;
+}
+
+#echarts_1,
+#echarts_2{
+    height: 180px;
+}
+
+#echarts_3{
+    height: 180px;
+}
+
+#map {
+    height: 639px;
+}
