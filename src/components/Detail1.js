@@ -46,15 +46,11 @@ class Detail1 extends Component {
         this.state = {
             productArray: [],
             productType: [],
-            vegetableList: [],
-            fruitList: [],
-            meatList: [],
-            oilList: [],
-            aquaticList: [],
             showProduct: [],
             productNames: "",
             productName: "",
-            productSizes: ""
+            productSizes: "",
+            productSize: ""
         }
     }
 
@@ -120,7 +116,9 @@ class Detail1 extends Component {
 
     handleTypeChange = (value) => {
         this.setState({
-            productType: this.state.productNames[value]
+            productType: this.state.productNames[value],
+            productName: "",
+            productSize: ""
         });
     }
 
@@ -130,9 +128,9 @@ class Detail1 extends Component {
         });
     }
 
-    clearChange = () => {
+    handleSizeChange = (value) => {
         this.setState({
-            productName: "",
+            productSize: value,
         });
     }
 
@@ -173,7 +171,7 @@ class Detail1 extends Component {
                                 width: 116,
                                 marginRight: 15
                             }}
-                            value={""}
+                            value={this.state.productName}
                             showSearch
                             onChange={this.handleNameChange}
                             allowClear={false}
@@ -187,7 +185,8 @@ class Detail1 extends Component {
                                 width: 116,
                                 marginRight: 15
                             }}
-                            onChange={this.handleNameChange}
+                            value={this.state.productSize}
+                            onChange={this.handleSizeChange}
                             showSearch
                             allowClear={false}
                         >
