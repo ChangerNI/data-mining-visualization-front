@@ -628,14 +628,14 @@ class IndexContent extends Component {
         });
         // 动态显示tootip
         var faultByHourIndex = 0; //播放所在下标
-        // var faultByHourTime = setInterval(function() { //使得tootip每隔三秒自动显示
-        //     myChart.dispatchAction({
-        //         type: 'showTip', // 根据 tooltip 的配置项显示提示框。
-        //         seriesIndex: 0,
-        //         dataIndex: faultByHourIndex,
-        //     });
-        //     faultByHourIndex++;
-        // }, 3000);
+        var faultByHourTime = setInterval(function() { //使得tootip每隔三秒自动显示
+            myChart.dispatchAction({
+                type: 'showTip', // 根据 tooltip 的配置项显示提示框。
+                seriesIndex: 0,
+                dataIndex: faultByHourIndex
+            });
+            faultByHourIndex++;
+        }, 5000);
     }
     echarts_3 = (vegetableType,vegetableValue) => {
         // 基于准备好的dom，初始化echarts实例
