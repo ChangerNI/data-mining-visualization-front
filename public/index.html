@@ -63,26 +63,29 @@
 
     $("#btnConnection").click(function() {
         //实现化WebSocket对象，指定要连接的服务器地址与端口
-        socket = new SockJS("http://10.202.0.8:8080/data-mining/websocket");
+        socket = new SockJS("http://192.168.1.87:8080/data-mining/websocket");
         //打开事件
         socket.onopen = function() {
-            alert("Socket 已打开");
+            console.log("Socket 已打开");
         };
 
+        var nums = 0;
         //获得消息事件
         socket.onmessage = function(message) {
             let info = JSON.stringify(message);
             $('#log-cat').append("<span class='insert-data'>"+JSON.parse(info).data+"</span>");
             let num = JSON.parse(info).data.substring(26,28);
+            let pro = 100/num;
             if(num){
-                let pro = 100/num;
-                for(let i=1;i<num;i++){
-                    pro = pro + 100/num;
-                    $('#progress').css('width',pro+"%");
-                    $('#progress-value').text(pro + "%");
+                nums ++;
+                pro = pro * nums;
+                $('#progress').css('width',pro+"%");
+                $('#progress-value').text(pro + "%");
+                if(!nums){
+                    $('#progress').css('width',"100%");
+                    $('#progress-value').text("100%");
                 }
             }
-            console.log(num.substring(26,28));
         };
         //关闭事件
         socket.onclose = function() {

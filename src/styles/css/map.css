@@ -1,7 +1,8 @@
 html,body{
     height: 100%;
     width: 100%;
-    background: url('../img/map_bg.png') center;
+    background: url('../img/map_bg.png');
+    backgroud-size: cover;
 }
 .data{
     width: 100%;
@@ -89,6 +90,8 @@ html,body{
     position: relative;
 }
 .data>.data-content>.con-left>.left-top>.info>.info-main .info-img>img{
+    width: 48px;
+    height: 48px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -125,6 +128,12 @@ html,body{
 .data>.data-content>.con-left>.left-top>.info>.info-main>.info-4> .info-text>p:nth-child(2){
     font-weight: 600;
     color:#f5c847;
+    font-size: 22px;
+}
+
+.data>.data-content>.con-left>.left-top>.info>.info-main>.info-5> .info-text>p:nth-child(2){
+    font-weight: 600;
+    color:#af89d6;
     font-size: 22px;
 }
 

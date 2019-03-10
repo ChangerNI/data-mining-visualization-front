@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import App from "./components/App";
-import Detail1 from "./components/Detail1";
+import Index from "./components/Index";
 
 ReactDOM.render(
-    <Detail1 />,
+    <Index />,
     document.getElementById('app')
 );
 

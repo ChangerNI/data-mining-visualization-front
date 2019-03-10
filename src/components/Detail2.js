@@ -6,6 +6,7 @@ import '../styles/css/detail2.css';
 import '../styles/css/bootstrap.min1.css';
 import axios from "axios";
 import qs from "qs";
+import $ from "jquery";
 
 class Detail2 extends Component {
     constructor(props) {
@@ -17,10 +18,11 @@ class Detail2 extends Component {
     }
 
     sendRequest = () => {
-        axios.post('http://10.202.0.8:8080/data-mining/product/spider',qs.stringify({
+        $('#log-cat').append("<span class='insert-data'>"+"数据加载中，请稍后..."+"</span>");
+        axios.post('http://192.168.1.87:8080/data-mining/product/spider',qs.stringify({
 
         })).then(res=>{
-
+            $('#log-cat').append("<span id='last-data' class='insert-data'>"+"数据请求完毕！"+"</span>");
         })
     }
 

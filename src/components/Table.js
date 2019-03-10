@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table,Pagination, LocaleProvider } from 'antd';
+import DetailLine from "./DetailLine";
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import reqwest from 'reqwest';
 import $ from 'jquery';
@@ -61,7 +62,11 @@ class TableContent extends Component {
             pageNum: 1,
             pageSize: 10,
             totalCount: "",
-            productType: "vegetable"
+            productType: "vegetable",
+            minPrice: [],
+            avgPrice: [],
+            maxPrice: [],
+            dateTime: []
         };
     }
 
@@ -124,7 +129,7 @@ class TableContent extends Component {
     fetch = (params = {}) => {
         this.setState({ loading: true});
         reqwest({
-            url: 'http://10.202.0.7:8080/data-mining/product/query',
+            url: 'http://192.168.1.87:8080/data-mining/product/query',
             method: 'post',
             data: {
                 ...params,
@@ -132,7 +137,17 @@ class TableContent extends Component {
             },
             type: 'json',
         }).then((data) => {
-            console.log(data)
+            console.log(data);
+            let min = [];
+            let avg = [];
+            let max = [];
+            let date = [];
+            for(let i=0;i<data.data.list.length;i++){
+                min.push(data.data.list[i].minPrice);
+                avg.push(data.data.list[i].avgPrice);
+                max.push(data.data.list[i].maxPrice);
+                date.push(data.data.list[i].dateTime);
+            }
             const pagination = { ...this.state.pagination };
             // Read total count from server
             pagination.total = data.data.total;
@@ -143,7 +158,11 @@ class TableContent extends Component {
                 pagination,
                 pageNum: pagination.current,
                 pageSize: pagination.pageSize,
-                totalCount: data.data.total
+                totalCount: data.data.total,
+                minPrice: min,
+                avgPrice: avg,
+                maxPrice: max,
+                dateTime: date
             });
         });
     }
@@ -162,6 +181,7 @@ class TableContent extends Component {
         return (
             <LocaleProvider locale={zhCN}>
                 <div>
+                    <DetailLine minPrice={this.state.minPrice} avgPrice={this.state.avgPrice} maxPrice={this.state.maxPrice} dateTime={this.state.dateTime}/>
                     <Table
                         columns={columns}
                         rowKey={record => record.id}

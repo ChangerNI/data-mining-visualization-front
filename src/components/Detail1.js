@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
-import {Select,Row,Col,Form} from "antd";
+import {Select,Row,Col} from "antd";
 import '../../node_modules/antd/dist/antd.css';
 import '../styles/css/detail1.css'
 import qs from "qs";
 import axios from "axios/index";
-import echarts from "echarts/lib/echarts";
-// 引入折线图
-import  'echarts/lib/chart/line';
-// 引入提示框和标题组件
-import 'echarts/lib/component/tooltip';
-import 'echarts/lib/component/title';
-import 'echarts/map/js/china';
+import Line from './Line';
 const Option = Select.Option;
+const url = "http://192.168.1.87:8080/data-mining/product";
 
 
 export const productData = () => [
@@ -46,35 +41,28 @@ class Detail1 extends Component {
         this.state = {
             productArray: [],
             productType: [],
+            types: [],
             showProduct: [],
             productNames: "",
             productName: "",
             productSizes: "",
-            productSize: ""
+            productSize: "",
+            productSizeList: [],
+            minPrice:[],
+            avgPrice:[],
+            maxPrice:[],
+            dateTime: [],
+            minPrice_seven:[],
+            avgPrice_seven:[],
+            maxPrice_seven:[],
+            dateTime_seven: []
         }
     }
 
     componentDidMount = () => {
-        var myChart = echarts.init(document.getElementById('showPrice'));
-        var option = {
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'line'
-            }]
-        };
 
-        myChart.setOption(option);
-        axios.post('http://10.202.0.8:8080/data-mining/product/enum',qs.stringify({
+        axios.post(url + '/enum',qs.stringify({
         })).then((res) => {
-
-            console.log(res.data.data);
 
             let type = res.data.data;
             let vegetableList = [];
@@ -83,20 +71,20 @@ class Detail1 extends Component {
             let aquaticList = [];
             let oilList = [];
             for(let i=0;i<type[0].children.length;i++){
-                vegetableList.push({name:type[0].children[i].value,size:type[0].children[i].children[0].value});
+                oilList.push({name:type[0].children[i].value,size:type[1].children[i].children});
             }
             console.log(vegetableList)
             for(let i=0;i<type[1].children.length;i++){
-                meatList.push({name:type[1].children[i].value,size:type[1].children[i].children[0].value});
+                fruitList.push({name:type[1].children[i].value,size:type[1].children[i].children});
             }
             for(let i=0;i<type[2].children.length;i++){
-                fruitList.push({name:type[2].children[i].value,size:type[2].children[i].children[0].value});
+                vegetableList.push({name:type[2].children[i].value,size:type[2].children[i].children});
             }
             for(let i=0;i<type[3].children.length;i++){
-                aquaticList.push({name:type[3].children[i].value,size:type[3].children[i].children[0].value});
+                meatList.push({name:type[3].children[i].value,size:type[3].children[i].children});
             }
             for(let i=0;i<type[4].children.length;i++){
-                oilList.push({name:type[4].children[i].value,size:type[4].children[i].children[0].value});
+                aquaticList.push({name:type[4].children[i].value,size:type[4].children[i].children});
             }
 
             const productNames = {
@@ -118,14 +106,22 @@ class Detail1 extends Component {
         this.setState({
             productType: this.state.productNames[value],
             productName: "",
-            productSize: ""
+            productSize: "",
+            types: value
         });
     }
 
     handleNameChange = (value) => {
         this.setState({
-            productName: value,
+            productName: value
         });
+        for(let i=0;i<this.state.productType.length;i++){
+            if(value === this.state.productType[i].name){
+                this.setState({
+                    productSizeList: this.state.productType[i].size
+                })
+            }
+        }
     }
 
     handleSizeChange = (value) => {
@@ -134,15 +130,80 @@ class Detail1 extends Component {
         });
     }
 
+    showPrice = () => {
+        let type = "";
+        if(this.state.types === "水产"){
+            type = "AQUATIC";
+        }else if(this.state.types === "蔬菜"){
+            type = "VEGETABLE";
+        }else if(this.state.types === "水果"){
+            type = "FRUIT"
+        }else if(this.state.types === "粮油"){
+            type = "OIL"
+        }else if(this.state.types === "肉类"){
+            type = "MEAT"
+        }
+        axios.post(url + '/analysis',qs.stringify({
+            "productType":type,
+            "productName":this.state.productName,
+            "sizeType":this.state.productSize
+        })).then((res) => {
+            let priceList = res.data.data;
+            let min = [];
+            let avg = [];
+            let max = [];
+            let date = []
+            for(let i=0;i<priceList.length;i++){
+                min.push(priceList[i].minPrice);
+                avg.push(priceList[i].avgPrice);
+                max.push(priceList[i].maxPrice);
+                date.push(priceList[i].dateTime.substring(0,10));
+            }
+
+            this.setState({
+                minPrice: min,
+                avgPrice: avg,
+                maxPrice: max,
+                dateTime: date
+            })
+        })
+
+        axios.post(url + '/future',qs.stringify({
+            "productType":type,
+            "productName":this.state.productName,
+            "sizeType":this.state.productSize
+        })).then((res) => {
+            let Lists = res.data.data;
+            let min_seven = [];
+            let avg_seven = [];
+            let max_seven = [];
+            let date_seven = []
+            for(let i=0;i<Lists.length;i++){
+                if(i %4 === 0){
+                    date_seven.push(Lists[i]);
+                }
+                if(i % 4 === 1){
+                    min_seven.push(Lists[i]);
+                }
+                if(i % 4 === 2){
+                    avg_seven.push(Lists[i]);
+                }
+                if(i % 4 === 3){
+                    max_seven.push(Lists[i]);
+                }
+            }
+
+            this.setState({
+                minPrice_seven: min_seven,
+                avgPrice_seven: avg_seven,
+                maxPrice_seven: max_seven,
+                dateTime_seven: date_seven
+            })
+        })
+    }
+
   render() {
-      const {productType} = this.state;
-      let productSize = [];
-      for(let i=0;i<productType.length;i++){
-          productSize.push(productType[i].size);
-      }
-      let productSizeList = productSize.filter(function(ele,index,self){
-          return self.indexOf(ele) === index;
-      })
+      const {productType,productSizeList} = this.state;
 
     return (
         <div className="condition-wrapper">
@@ -159,7 +220,6 @@ class Detail1 extends Component {
                             }}
                             showSearch
                             onChange={this.handleTypeChange}
-                            onBlur={this.clearChange}
                             allowClear={false}
                         >
                             {productTypes.map(product => <Option key={product}>{product}</Option>)}
@@ -190,14 +250,14 @@ class Detail1 extends Component {
                             showSearch
                             allowClear={false}
                         >
-                            {productSizeList.map(size => <Option key={size}>{size}</Option>)}
+                            {productSizeList.map(size => <Option key={size.value}>{size.value}</Option>)}
                         </Select>
                         </div>
                     </div>
                 </Col>
                 <Col span={4}>
                     <div className="filter-right">
-                        <button type="button" className="ant-btn detail-btn">
+                        <button type="button" className="ant-btn detail-btn" onClick={this.showPrice}>
                             <span>查 询</span>
                         </button>
                     </div>
@@ -206,11 +266,8 @@ class Detail1 extends Component {
 
                 </Col>
             </Row>
-            <Row>
-                <Col span={4}></Col>
-                <Col span={16} id="showPrice" className="detail-echart"></Col>
-                <Col span={4}></Col>
-            </Row>
+            <Line name={this.state.productName} minPrice={this.state.minPrice} avgPrice={this.state.avgPrice} maxPrice={this.state.maxPrice} dateTime={this.state.dateTime}
+                  minPrice_seven={this.state.minPrice_seven} avgPrice_seven={this.state.avgPrice_seven} maxPrice_seven={this.state.maxPrice_seven} dateTime_seven={this.state.dateTime_seven}/>
         </div>
     );
   }

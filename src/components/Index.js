@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import IndexContent from './IndexContent';
 import qs from "qs";
 import axios from "axios/index";
-import echarts from "echarts/lib/echarts";
-const url = "http://10.202.0.8:8080/data-mining/product";
+const url = "http://192.168.1.87:8080/data-mining/product";
 
 
 class Index extends Component {
@@ -20,7 +19,10 @@ class Index extends Component {
             meatType: [],
             meatValue:[],
             aquaticType: [],
-            aquaticValue: []
+            aquaticValue: [],
+            mapType: [],
+            mapPercent: [],
+            mapData: []
         }
     }
 
@@ -89,13 +91,28 @@ class Index extends Component {
                 aquaticValue: aquatic_Value
             })
         })
+
+        var map_Type = [];
+        var map_Percent = [];
+        axios.post(url + '/transport', qs.stringify({})).then((res) => {
+            console.log(res);
+            for (let i = 0; i < res.data.data.length; i++) {
+                map_Type.push(res.data.data[i].type);
+                map_Percent.push(res.data.data[i].percent);
+            }
+            this.setState({
+                mapType: map_Type,
+                mapPercent: map_Percent,
+                mapData: res.data.data
+            })
+        })
     }
 
 
     render() {
         return (
             <IndexContent vegetableType={this.state.vegetableType}  vegetableValue={this.state.vegetableValue} oilType={this.state.oilType} oilValue={this.state.oilValue} fruitType={this.state.fruitType} fruitValue={this.state.fruitValue}
-                       meatType={this.state.meatType} meatValue={this.state.meatValue} aquaticType={this.state.aquaticType} aquaticValue={this.state.aquaticValue}/>
+                       meatType={this.state.meatType} meatValue={this.state.meatValue} aquaticType={this.state.aquaticType} aquaticValue={this.state.aquaticValue} mapType={this.state.mapType} mapPercent={this.state.mapPercent} mapData={this.state.mapData}/>
 
         );
     }

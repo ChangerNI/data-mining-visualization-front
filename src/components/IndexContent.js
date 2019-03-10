@@ -23,11 +23,11 @@ class IndexContent extends Component {
     }
 
     componentWillReceiveProps  = (nextProps) => {
-        const {vegetableType,vegetableValue,fruitType,fruitValue,oilType,oilValue,meatType,meatValue,aquaticType,aquaticValue} = nextProps;
+        const {vegetableType,vegetableValue,fruitType,fruitValue,oilType,oilValue,meatType,meatValue,aquaticType,aquaticValue,mapType,mapPercent,mapData} = nextProps;
 
         this.echarts_1();
         this.echarts_2(aquaticType,aquaticValue);
-        this.map();
+        this.map(mapType,mapPercent,mapData);
         this.echarts_3(vegetableType,vegetableValue);
         this.echarts_4(fruitType,fruitValue);
         this.echarts_5(oilType,oilValue);
@@ -133,6 +133,23 @@ class IndexContent extends Component {
     echarts_2 = (aquaticType,aquaticValue) => {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echarts_2'));
+        var formatNum = (strNum) => {
+            if(strNum.length <= 3) {
+                return strNum;
+            }
+            if(!/^(\+|-)?(\d+)(\.\d+)?$/.test(strNum)) {
+                return strNum;
+            }
+            var a = RegExp.$1,
+                b = RegExp.$2,
+                c = RegExp.$3;
+            var re = new RegExp();
+            re.compile("(\\d)(\\d{3})(,|$)");
+            while(re.test(b)) {
+                b = b.replace(re, "$1,$2$3");
+            }
+            return a + "" + b + "" + c;
+        }
 
         var xData = function() {
             var data = aquaticType;
@@ -153,7 +170,7 @@ class IndexContent extends Component {
                 // extraCssText: 'box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);', //添加阴影
                 formatter: function(params) {
                     if (params.seriesName !== "") {
-                        return params.name + ' ：  ' + params.value + ' 辆';
+                        return params.name + ' ：  ' + formatNum(params.value) + ' kg';
                     }
                 },
 
@@ -234,7 +251,9 @@ class IndexContent extends Component {
                         fontWeight: 'normal',
                         fontSize: '12',
                     },
-                    formatter: '{value}',
+                    formatter: function(value){
+                        return formatNum(value)
+                    }
                 },
             },
             series: [{
@@ -292,7 +311,7 @@ class IndexContent extends Component {
             myChart.resize();
         });
     }
-    map = () => {
+    map = (mapType,mapPercent,mapData) => {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('map'));
 
@@ -300,7 +319,7 @@ class IndexContent extends Component {
         var name_fontFamily = '宋体'
         var name_fontSize = 35
         var mapName = 'china'
-        var data = []
+        var data = [];
         var geoCoordMap = {};
         var toolTipData = [];
 
@@ -308,11 +327,38 @@ class IndexContent extends Component {
         myChart.showLoading();
         var mapFeatures = echarts.getMap(mapName).geoJson.features;
         myChart.hideLoading();
+        console.log(mapFeatures);
+        var type = function(name){
+            for(let i=0;i<mapData.length;i++){
+                if(mapData[i].province === name){
+                    return mapData[i].type
+                }
+            }
+        }
+        var percent = function(name){
+            for(let i=0;i<mapData.length;i++){
+                if(mapData[i].province === name){
+                    return mapData[i].percent
+                }
+            }
+        }
         mapFeatures.forEach(function(v) {
             // 地区名称
             var name = v.properties.name;
             // 地区经纬度
             geoCoordMap[name] = v.properties.cp;
+            let mtype = "";
+            if(type(name)){
+                mtype = type(name);
+            }else{
+                mtype = "暂无";
+            }
+            let mpercent = "";
+            if(type(name)){
+                mpercent = type(name);
+            }else{
+                mpercent = "0";
+            }
             data.push({
                 name: name,
                 value: Math.round(Math.random() * 100 + 10)
@@ -320,20 +366,12 @@ class IndexContent extends Component {
             toolTipData.push({
                 name: name,
                 value: [{
-                    name: "车型一",
-                    value: Math.round(Math.random() * 100 + 10) + '辆'
+                    name: "种类",
+                    value: " " + mtype
                 },
                     {
-                        name: "车型二",
-                        value: Math.round(Math.random() * 100 + 10)+ '辆'
-                    },
-                    {
-                        name: "车型三",
-                        value: Math.round(Math.random() * 100 + 10)+ '辆'
-                    },
-                    {
-                        name: "车型四",
-                        value: Math.round(Math.random() * 100 + 10)+ '辆'
+                        name: "百分比",
+                        value: " " + mpercent+ '%'
                     }
                 ]
             })
@@ -588,6 +626,16 @@ class IndexContent extends Component {
         window.addEventListener("resize",function(){
             myChart.resize();
         });
+        // 动态显示tootip
+        var faultByHourIndex = 0; //播放所在下标
+        // var faultByHourTime = setInterval(function() { //使得tootip每隔三秒自动显示
+        //     myChart.dispatchAction({
+        //         type: 'showTip', // 根据 tooltip 的配置项显示提示框。
+        //         seriesIndex: 0,
+        //         dataIndex: faultByHourIndex,
+        //     });
+        //     faultByHourIndex++;
+        // }, 3000);
     }
     echarts_3 = (vegetableType,vegetableValue) => {
         // 基于准备好的dom，初始化echarts实例
@@ -637,8 +685,8 @@ class IndexContent extends Component {
                         lineStyle:{
                             color:'#2c3459',
                         },
-                        interval: {default: 0},
-                        rotate:50,
+                        interval: 0,
+                        rotate:30,
                         formatter : function(params){
                             var newParamsName = "";// 最终拼接成的字符串
                             var paramsNameNumber = params.length;// 实际标签的个数
@@ -666,7 +714,6 @@ class IndexContent extends Component {
                 }
             ],
             yAxis : {
-
                 type : 'value',
                 axisLabel: {
                     textStyle: {
@@ -721,6 +768,23 @@ class IndexContent extends Component {
     echarts_4 = (fruitType,fruitValue) => {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echarts_4'));
+        var formatNum = (strNum) => {
+            if(strNum.length <= 3) {
+                return strNum;
+            }
+            if(!/^(\+|-)?(\d+)(\.\d+)?$/.test(strNum)) {
+                return strNum;
+            }
+            var a = RegExp.$1,
+                b = RegExp.$2,
+                c = RegExp.$3;
+            var re = new RegExp();
+            re.compile("(\\d)(\\d{3})(,|$)");
+            while(re.test(b)) {
+                b = b.replace(re, "$1,$2$3");
+            }
+            return a + "" + b + "" + c;
+        }
 
         var xData = function() {
             var data = fruitType;
@@ -741,7 +805,7 @@ class IndexContent extends Component {
                 // extraCssText: 'box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);', //添加阴影
                 formatter: function(params) {
                     if (params.seriesName !== "") {
-                        return params.name + ' ：  ' + params.value + ' 辆';
+                        return params.name + ' ：  ' + formatNum(params.value) + ' kg';
                     }
                 },
 
@@ -750,7 +814,7 @@ class IndexContent extends Component {
                 borderWidth: 0,
                 top: 20,
                 bottom: 35,
-                left:55,
+                left:75,
                 right:30,
                 textStyle: {
                     color: "#fff"
@@ -824,8 +888,10 @@ class IndexContent extends Component {
                         fontWeight: 'normal',
                         fontSize: '12',
                     },
-                    formatter: '{value}',
-                },
+                    formatter: function(value){
+                        return formatNum(value)
+                    }
+                }
             },
             series: [{
                 // name: '生师比(%)',
@@ -842,36 +908,37 @@ class IndexContent extends Component {
                         }]),
                         barBorderRadius: 50,
                         borderWidth: 0,
+
                     },
                     emphasis: {
                         shadowBlur: 15,
                         shadowColor: 'rgba(105,123, 214, 0.7)'
                     }
                 },
-                zlevel: 2,
+                level: 2,
                 barWidth: '20%',
                 data: data,
             },
-                {
-                    name: '',
-                    type: 'bar',
-                    xAxisIndex: 1,
-                    zlevel: 1,
-                    itemStyle: {
-                        normal: {
-                            color: '#121847',
-                            borderWidth: 0,
-                            shadowBlur: {
-                                shadowColor: 'rgba(255,255,255,0.31)',
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowOffsetY: 2,
-                            },
-                        }
-                    },
-                    barWidth: '20%',
-                    data: [30, 30, 30, 30, 30]
-                }
+                // {
+                //     name: '',
+                //     type: 'bar',
+                //     xAxisIndex: 1,
+                //     zlevel: 1,
+                //     itemStyle: {
+                //         normal: {
+                //             color: '#121847',
+                //             borderWidth: 0,
+                //             shadowBlur: {
+                //                 shadowColor: 'rgba(255,255,255,0.31)',
+                //                 shadowBlur: 10,
+                //                 shadowOffsetX: 0,
+                //                 shadowOffsetY: 2,
+                //             },
+                //         }
+                //     },
+                //     barWidth: '20%',
+                //     data: [30, 30, 30, 30, 30]
+                // }
             ]
         }
 
@@ -885,6 +952,23 @@ class IndexContent extends Component {
     echarts_5 = (oilType,oilValue) => {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echarts_5'));
+        var formatNum = (strNum) => {
+            if(strNum.length <= 3) {
+                return strNum;
+            }
+            if(!/^(\+|-)?(\d+)(\.\d+)?$/.test(strNum)) {
+                return strNum;
+            }
+            var a = RegExp.$1,
+                b = RegExp.$2,
+                c = RegExp.$3;
+            var re = new RegExp();
+            re.compile("(\\d)(\\d{3})(,|$)");
+            while(re.test(b)) {
+                b = b.replace(re, "$1,$2$3");
+            }
+            return a + "" + b + "" + c;
+        }
 
         var xData = function() {
             var data = oilType;
@@ -905,7 +989,7 @@ class IndexContent extends Component {
                 // extraCssText: 'box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);', //添加阴影
                 formatter: function(params) {
                     if (params.seriesName !== "") {
-                        return params.name + ' ：  ' + params.value + ' 辆';
+                        return params.name + ' ：  ' + formatNum(params.value) + ' kg';
                     }
                 },
 
@@ -988,7 +1072,9 @@ class IndexContent extends Component {
                         fontWeight: 'normal',
                         fontSize: '12',
                     },
-                    formatter: '{value}',
+                    formatter: function(value){
+                        return formatNum(value)
+                    }
                 },
             },
             series: [{
@@ -1049,6 +1135,23 @@ class IndexContent extends Component {
     echarts_6 = (meatType,meatValue) => {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echarts_6'));
+        var formatNum = (strNum) => {
+            if(strNum.length <= 3) {
+                return strNum;
+            }
+            if(!/^(\+|-)?(\d+)(\.\d+)?$/.test(strNum)) {
+                return strNum;
+            }
+            var a = RegExp.$1,
+                b = RegExp.$2,
+                c = RegExp.$3;
+            var re = new RegExp();
+            re.compile("(\\d)(\\d{3})(,|$)");
+            while(re.test(b)) {
+                b = b.replace(re, "$1,$2$3");
+            }
+            return a + "" + b + "" + c;
+        }
 
         var xData = function() {
             var data = meatType;
@@ -1069,7 +1172,7 @@ class IndexContent extends Component {
                 // extraCssText: 'box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);', //添加阴影
                 formatter: function(params) {
                     if (params.seriesName !== "") {
-                        return params.name + ' ：  ' + params.value + ' 辆';
+                        return params.name + ' ：  ' + formatNum(params.value) + ' kg';
                     }
                 },
 
@@ -1152,7 +1255,9 @@ class IndexContent extends Component {
                         fontWeight: 'normal',
                         fontSize: '12',
                     },
-                    formatter: '{value}',
+                    formatter: function(value){
+                        return formatNum(value)
+                    }
                 },
             },
             series: [{
@@ -1266,9 +1371,9 @@ class IndexContent extends Component {
                                                             <p>261,400</p>
                                                         </div>
                                                     </div>
-                                                    <div className="info-4">
+                                                    <div className="info-5">
                                                         <div className="info-img fl">
-                                                            <img src={require("../styles/img/info-img-4.png")} alt=""/>
+                                                            <img src={require("../styles/img/info-img-5.png")} alt=""/>
                                                         </div>
                                                         <div className="info-text fl">
                                                             <p>粮油</p>

@@ -1,6 +1,6 @@
 
 .detail2 .progress{
-  width: 400px;
+  width: 900px;
   height: 25px;
   background: #262626;
   padding: 5px;
@@ -48,4 +48,8 @@
 }
 @keyframes animate-positive{
   0% { width: 0; }
+}
+
+.insert-data {
+  color: #fff;
 }
