@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import IndexContent from './IndexContent';
 import qs from "qs";
 import axios from "axios/index";
-const url = "http://192.168.1.87:8080/data-mining/product";
+const url = "http://10.202.0.5:8080/data-mining/product";
 
 
 class Index extends Component {
@@ -95,7 +95,7 @@ class Index extends Component {
         var map_Type = [];
         var map_Percent = [];
         axios.post(url + '/transport', qs.stringify({})).then((res) => {
-            console.log(res);
+            console.log(res.data.data);
             for (let i = 0; i < res.data.data.length; i++) {
                 map_Type.push(res.data.data[i].type);
                 map_Percent.push(res.data.data[i].percent);

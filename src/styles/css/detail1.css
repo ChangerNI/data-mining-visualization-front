@@ -1,5 +1,8 @@
 .condition-wrapper {
-  margin-top: 100px;
+  padding-top: 100px;
+  background: url("../img/bg.jpg");
+  -webkit-background-size: cover;
+  background-size: cover;
 }
 
 .condition-wrapper .ant-row:first-child {
@@ -23,7 +26,7 @@
 
 /*detail2样式*/
 .detail2 {
-  margin-top: 40px;
+  padding-top: 40px;
 }
 
 .detail2-echart {

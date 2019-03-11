@@ -327,53 +327,42 @@ class IndexContent extends Component {
         myChart.showLoading();
         var mapFeatures = echarts.getMap(mapName).geoJson.features;
         myChart.hideLoading();
-        console.log(mapFeatures);
+        console.log(mapData);
         var type = function(name){
             for(let i=0;i<mapData.length;i++){
-                if(mapData[i].province === name){
-                    return mapData[i].type
+                if(mapData[i].value === name){
+                    return mapData[i].children
                 }
             }
         }
-        var percent = function(name){
-            for(let i=0;i<mapData.length;i++){
-                if(mapData[i].province === name){
-                    return mapData[i].percent
-                }
-            }
-        }
+
+
         mapFeatures.forEach(function(v) {
             // 地区名称
             var name = v.properties.name;
             // 地区经纬度
             geoCoordMap[name] = v.properties.cp;
-            let mtype = "";
+            let mtype = [ ];
             if(type(name)){
                 mtype = type(name);
             }else{
-                mtype = "暂无";
+                mtype = [];
             }
-            let mpercent = "";
-            if(type(name)){
-                mpercent = type(name);
-            }else{
-                mpercent = "0";
-            }
+            console.log(type(name));
             data.push({
                 name: name,
                 value: Math.round(Math.random() * 100 + 10)
             })
+            let obj = {};
+            var data_obj = [];
+            for(let i=0;i<mtype.length;i++){
+                obj = {name: mtype[i].value,value:mtype[i].children}
+                data_obj.push(obj);
+            }
+            console.log(data_obj);
             toolTipData.push({
                 name: name,
-                value: [{
-                    name: "种类",
-                    value: " " + mtype
-                },
-                    {
-                        name: "百分比",
-                        value: " " + mpercent+ '%'
-                    }
-                ]
+                // value: [obj]
             })
         });
 
@@ -1319,126 +1308,129 @@ class IndexContent extends Component {
 
     render() {
         return (
-            <div className="data" id="index-data">
-                <div className="data-title">
-                    <div className="title-left fl"></div>
-                    <div className="title-center fl"></div>
-                    <div className="title-right fr"></div>
-                </div>
-                <div className="data-content">
-                    <div className="con-left fl">
-                        <div className="left-top">
-                            <div className="info">
-                                <div className="info-title">实时统计</div>
-                                <img src={require('../styles/img/bj-1.png')} alt="" className="bj-1"/>
+            <div>
+                <div className="data" id="index-data">
+                    <div className="data-title">
+                        <div className="title-left fl"></div>
+                        <div className="title-center fl"></div>
+                        <div className="title-right fr"></div>
+                    </div>
+                    <div className="data-content">
+                        <div className="con-left fl">
+                            <div className="left-top">
+                                <div className="info">
+                                    <div className="info-title">实时统计</div>
+                                    <img src={require('../styles/img/bj-1.png')} alt="" className="bj-1"/>
                                     <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
-                                        <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
-                                            <img src={require("../styles/img/bj-4.png")} alt="" className="bj-4"/>
-                                                <div className="info-main">
-                                                    <div className="info-1">
-                                                        <div className="info-img fl">
-                                                            <img src={require("../styles/img/info-img-1.png")} alt=""/>
-                                                        </div>
-                                                        <div className="info-text fl">
-                                                            <p>蔬菜</p>
-                                                            <p>44,965,999</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="info-2">
-                                                        <div className="info-img fl">
-                                                            <img src={require("../styles/img/info-img-2.png")} alt=""/>
-                                                        </div>
-                                                        <div className="info-text fl">
-                                                            <p>水果</p>
-                                                            <p>12,320,000</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="info-3">
-                                                        <div className="info-img fl">
-                                                            <img src={require("../styles/img/info-img-3.png")} alt=""/>
-                                                        </div>
-                                                        <div className="info-text fl">
-                                                            <p>肉禽蛋</p>
-                                                            <p>818,530</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="info-4">
-                                                        <div className="info-img fl">
-                                                            <img src={require("../styles/img/info-img-4.png")} alt=""/>
-                                                        </div>
-                                                        <div className="info-text fl">
-                                                            <p>淡水鱼</p>
-                                                            <p>261,400</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="info-5">
-                                                        <div className="info-img fl">
-                                                            <img src={require("../styles/img/info-img-5.png")} alt=""/>
-                                                        </div>
-                                                        <div className="info-text fl">
-                                                            <p>粮油</p>
-                                                            <p>496,160</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                    <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
+                                    <img src={require("../styles/img/bj-4.png")} alt="" className="bj-4"/>
+                                    <div className="info-main">
+                                        <div className="info-1">
+                                            <div className="info-img fl">
+                                                <img src={require("../styles/img/info-img-1.png")} alt=""/>
+                                            </div>
+                                            <div className="info-text fl">
+                                                <p>蔬菜</p>
+                                                <p>44,965,999</p>
+                                            </div>
+                                        </div>
+                                        <div className="info-2">
+                                            <div className="info-img fl">
+                                                <img src={require("../styles/img/info-img-2.png")} alt=""/>
+                                            </div>
+                                            <div className="info-text fl">
+                                                <p>水果</p>
+                                                <p>12,320,000</p>
+                                            </div>
+                                        </div>
+                                        <div className="info-3">
+                                            <div className="info-img fl">
+                                                <img src={require("../styles/img/info-img-3.png")} alt=""/>
+                                            </div>
+                                            <div className="info-text fl">
+                                                <p>肉禽蛋</p>
+                                                <p>818,530</p>
+                                            </div>
+                                        </div>
+                                        <div className="info-4">
+                                            <div className="info-img fl">
+                                                <img src={require("../styles/img/info-img-4.png")} alt=""/>
+                                            </div>
+                                            <div className="info-text fl">
+                                                <p>淡水鱼</p>
+                                                <p>261,400</p>
+                                            </div>
+                                        </div>
+                                        <div className="info-5">
+                                            <div className="info-img fl">
+                                                <img src={require("../styles/img/info-img-5.png")} alt=""/>
+                                            </div>
+                                            <div className="info-text fl">
+                                                <p>粮油</p>
+                                                <p>496,160</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="top-bottom">
+                                    <div className="title">农产品分类</div>
+                                    <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
+                                    <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
+                                    <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
+                                    <img src={require("../styles/img/bj-4.png")} alt="" className="bj-4"/>
+                                    <div id="echarts_1" className="charts"></div>
+                                </div>
                             </div>
-                            <div className="top-bottom">
-                                <div className="title">农产品分类</div>
+                            <div className="left-bottom">
+                                <div className="title">水产</div>
                                 <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
-                                    <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
-                                        <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
-                                            <img src={require("../styles/img/bj-4.png")} alt="" className="bj-4"/>
-                                                <div id="echarts_1" className="charts"></div>
+                                <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
+                                <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
+                                <img src={require("../styles/img/bj-4.png")} alt="" className="bj-4"/>
+                                <div id="echarts_2" className="charts"></div>
                             </div>
                         </div>
-                        <div className="left-bottom">
-                            <div className="title">水产</div>
-                            <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
+                        <div className="con-center fl">
+                            <div className="cen-top" id="map"></div>
+                            <div className="cen-bottom">
+                                <div className="title">蔬菜</div>
+                                <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
                                 <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
-                                    <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
-                                        <img src={require("../styles/img/bj-4.png")} alt="" className="bj-4"/>
-                                            <div id="echarts_2" className="charts"></div>
+                                <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
+                                <img src={require("../styles/img/bj-4.png")} alt="" className="bj-4"/>
+                                <div id="echarts_3" className="charts"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div className="con-center fl">
-                        <div className="cen-top" id="map"></div>
-                        <div className="cen-bottom">
-                            <div className="title">蔬菜</div>
-                            <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
+                        <div className="con-right fr">
+                            <div className="right-top">
+                                <div className="title">水果</div>
+                                <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
                                 <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
-                                    <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
-                                        <img src={require("../styles/img/bj-4.png")} alt="" className="bj-4"/>
-                                            <div id="echarts_3" className="charts"></div>
-                        </div>
-                    </div>
-                    <div className="con-right fr">
-                        <div className="right-top">
-                            <div className="title">水果</div>
-                            <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
+                                <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
+                                <img src={require("../styles/img/bj-4.png")} alt="" className="bj-4"/>
+                                <div id="echarts_4" className="charts"></div>
+                            </div>
+                            <div className="right-center">
+                                <div className="title">粮油</div>
+                                <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
                                 <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
-                                    <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
-                                        <img src={require("../styles/img/bj-4.png")} alt="" className="bj-4"/>
-                                            <div id="echarts_4" className="charts"></div>
-                        </div>
-                        <div className="right-center">
-                            <div className="title">粮油</div>
-                            <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
+                                <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
+                                <img src={require("../styles/img/bj-4.png")} alt="" className="bj-4"/>
+                                <div id="echarts_5" className="charts"></div>
+                            </div>
+                            <div className="right-bottom">
+                                <div className="title">肉禽类</div>
+                                <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
                                 <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
-                                    <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
-                                        <img src={require("../styles/img/bj-4.png")} alt="" className="bj-4"/>
-                                            <div id="echarts_5" className="charts"></div>
-                        </div>
-                        <div className="right-bottom">
-                            <div className="title">肉禽类</div>
-                            <img src={require("../styles/img/bj-1.png")} alt="" className="bj-1"/>
-                                <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
-                                    <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
-                                        <img src={require("../styles/img/bj-4.png")} alt="" className="bj-4"/>
-                                            <div id="echarts_6" className="charts"></div>
+                                <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
+                                <img src={require("../styles/img/bj-4.png")} alt="" className="bj-4"/>
+                                <div id="echarts_6" className="charts"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         );
     }
 }

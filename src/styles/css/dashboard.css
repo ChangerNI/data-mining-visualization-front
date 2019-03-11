@@ -71,6 +71,12 @@ body {
  * Main content
  */
 
+#detail {
+  background: url("../img/bg.jpg");
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
 .main {
   padding: 20px;
 }

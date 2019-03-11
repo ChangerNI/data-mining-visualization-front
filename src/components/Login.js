@@ -252,9 +252,7 @@ class Login extends Component {
         e.preventDefault();
         let username = $('#username').val();
         let password = $('#password').val();
-        // if($('#username').val() === "123" && $('#password').val() === "123"){
-        //     this.props.history.push('/guide');
-        // }
+
         if(username === ""){
             alert("用户名不能为空");
             this.props.history.push('/');
@@ -264,15 +262,11 @@ class Login extends Component {
             this.props.history.push('/');
         }
 
-        axios.post('http://10.202.0.6:8080/data-mining/u/login',qs.stringify({
+        axios.post('http://10.202.0.5:8080/data-mining/u/login',qs.stringify({
             username: username,
             password: password
         })).then(res=>{
-            if(res.status === 200) {
-                this.props.history.push('/guide');
-            }else {
-                alert("用户名或密码错误，请重新输入！")
-            }
+            this.props.history.push('/guide');
         })
 
     }
