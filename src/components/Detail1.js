@@ -71,7 +71,7 @@ class Detail1 extends Component {
             let aquaticList = [];
             let oilList = [];
             for(let i=0;i<type[0].children.length;i++){
-                oilList.push({name:type[0].children[i].value,size:type[1].children[i].children});
+                oilList.push({name:type[0].children[i].value,size:type[0].children[i].children});
             }
             console.log(vegetableList)
             for(let i=0;i<type[1].children.length;i++){
