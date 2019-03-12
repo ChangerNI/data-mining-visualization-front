@@ -5,8 +5,8 @@ import '../styles/css/detail1.css'
 import qs from "qs";
 import axios from "axios/index";
 import Line from './Line';
+import {url} from '../config/api';
 const Option = Select.Option;
-const url = "http://192.168.1.87:8080/data-mining/product";
 
 
 export const productData = () => [
@@ -61,7 +61,7 @@ class Detail1 extends Component {
 
     componentDidMount = () => {
 
-        axios.post(url + '/enum',qs.stringify({
+        axios.post(url + '/product/enum',qs.stringify({
         })).then((res) => {
 
             let type = res.data.data;

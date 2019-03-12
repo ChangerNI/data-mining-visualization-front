@@ -21,6 +21,8 @@ html,body{
     border-right: 5px solid #0089ff;
     border-left: 5px solid #0089ff;
     background: url("../img/title.png") no-repeat;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
 }
 .data>.data-title>.title-left,
 .data>.data-title>.title-right{

@@ -5,6 +5,7 @@ import '../styles/css/fontawesome-all.css';
 import $ from 'jquery';
 import axios from 'axios';
 import qs from 'qs';
+import {url} from '../config/api';
 
 class Login extends Component {
     super(props){
@@ -262,7 +263,7 @@ class Login extends Component {
             this.props.history.push('/');
         }
 
-        axios.post('http://10.202.0.5:8080/data-mining/u/login',qs.stringify({
+        axios.post(url + '/u/login',qs.stringify({
             username: username,
             password: password
         })).then(res=>{

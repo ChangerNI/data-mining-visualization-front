@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import IndexContent from './IndexContent';
 import qs from "qs";
 import axios from "axios/index";
-const url = "http://10.202.0.5:8080/data-mining/product";
+import {url} from '../config/api';
 
 
 class Index extends Component {
@@ -29,7 +29,7 @@ class Index extends Component {
     componentDidMount = () => {
         var vegetable_Type = [];
         var vegetable_Value = [];
-        axios.post(url + '/vegetable-kg', qs.stringify({})).then((res) => {
+        axios.post(url + '/product/vegetable-kg', qs.stringify({})).then((res) => {
             for (let i = 0; i < res.data.data.length; i++) {
                 vegetable_Type.push(res.data.data[i].type);
                 vegetable_Value.push(res.data.data[i].totalKG);
@@ -42,7 +42,7 @@ class Index extends Component {
 
         var oil_Type = [];
         var oil_Value = [];
-        axios.post(url + '/oil-kg', qs.stringify({})).then((res) => {
+        axios.post(url + '/product/oil-kg', qs.stringify({})).then((res) => {
             for (let i = 0; i < res.data.data.length; i++) {
                 oil_Type.push(res.data.data[i].type);
                 oil_Value.push(res.data.data[i].totalKG);
@@ -55,7 +55,7 @@ class Index extends Component {
 
         var fruit_Type = [];
         var fruit_Value = [];
-        axios.post(url + '/fruit-kg', qs.stringify({})).then((res) => {
+        axios.post(url + '/product/fruit-kg', qs.stringify({})).then((res) => {
             for (let i = 0; i < res.data.data.length; i++) {
                 fruit_Type.push(res.data.data[i].type);
                 fruit_Value.push(res.data.data[i].totalKG);
@@ -68,7 +68,7 @@ class Index extends Component {
 
         var meat_Type = [];
         var meat_Value = [];
-        axios.post(url + '/meat-kg', qs.stringify({})).then((res) => {
+        axios.post(url + '/product/meat-kg', qs.stringify({})).then((res) => {
             for (let i = 0; i < res.data.data.length; i++) {
                 meat_Type.push(res.data.data[i].type);
                 meat_Value.push(res.data.data[i].totalKG);
@@ -81,7 +81,7 @@ class Index extends Component {
 
         var aquatic_Type = [];
         var aquatic_Value = [];
-        axios.post(url + '/aquatic-kg', qs.stringify({})).then((res) => {
+        axios.post(url + '/product/aquatic-kg', qs.stringify({})).then((res) => {
             for (let i = 0; i < res.data.data.length; i++) {
                 aquatic_Type.push(res.data.data[i].type);
                 aquatic_Value.push(res.data.data[i].totalKG);
@@ -94,7 +94,7 @@ class Index extends Component {
 
         var map_Type = [];
         var map_Percent = [];
-        axios.post(url + '/transport', qs.stringify({})).then((res) => {
+        axios.post(url + '/product/transport', qs.stringify({})).then((res) => {
             console.log(res.data.data);
             for (let i = 0; i < res.data.data.length; i++) {
                 map_Type.push(res.data.data[i].type);

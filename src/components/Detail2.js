@@ -7,6 +7,7 @@ import '../styles/css/bootstrap.min1.css';
 import axios from "axios";
 import qs from "qs";
 import $ from "jquery";
+import {url} from '../config/api';
 
 class Detail2 extends Component {
     constructor(props) {
@@ -14,12 +15,14 @@ class Detail2 extends Component {
     }
 
     componentDidMount() {
+        let height = window.innerHeight;
+        $('#detail2').css("height",height);
 
     }
 
     sendRequest = () => {
         $('#log-cat').append("<span class='insert-data'>"+"数据加载中，请稍后..."+"</span>");
-        axios.post('http://192.168.1.87:8080/data-mining/product/spider',qs.stringify({
+        axios.post(url + '/product/spider',qs.stringify({
 
         })).then(res=>{
             $('#log-cat').append("<span id='last-data' class='insert-data'>"+"数据请求完毕！"+"</span>");
@@ -28,7 +31,7 @@ class Detail2 extends Component {
 
   render() {
     return (
-        <div className="detail2">
+        <div className="detail2" id="detail2">
             <Row>
                 <Col span={4}></Col>
                 <Col span={16}>

@@ -4,6 +4,7 @@ import DetailLine from "./DetailLine";
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import reqwest from 'reqwest';
 import $ from 'jquery';
+import {url} from '../config/api';
 
 /* 分页的配置, 传入总条数, 页码, 页码条数*/
 const PagingConfiguration = (totalCount, pageNo, pageSize, pageSizeOptions) => ({
@@ -129,7 +130,7 @@ class TableContent extends Component {
     fetch = (params = {}) => {
         this.setState({ loading: true});
         reqwest({
-            url: 'http://192.168.1.87:8080/data-mining/product/query',
+            url: url + '/product/query',
             method: 'post',
             data: {
                 ...params,
