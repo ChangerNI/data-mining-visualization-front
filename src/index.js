@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Detail2 from "./components/Detail2";
+import App from "./components/App";
 
 ReactDOM.render(
-    <Detail2 />,
+    <App />,
     document.getElementById('app')
 );
 

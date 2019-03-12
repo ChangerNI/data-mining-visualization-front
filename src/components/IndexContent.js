@@ -332,6 +332,7 @@ class IndexContent extends Component {
             for(let i=0;i<mapData.length;i++){
                 if(mapData[i].value === name){
                     return mapData[i].children
+                    console.log(mapData[i].children)
                 }
             }
         }
@@ -342,27 +343,24 @@ class IndexContent extends Component {
             var name = v.properties.name;
             // 地区经纬度
             geoCoordMap[name] = v.properties.cp;
-            let mtype = [ ];
+            let mtype = [];
             if(type(name)){
                 mtype = type(name);
             }else{
                 mtype = [];
             }
-            console.log(type(name));
             data.push({
                 name: name,
                 value: Math.round(Math.random() * 100 + 10)
             })
-            let obj = {};
-            var data_obj = [];
+
+            let obj = [];
             for(let i=0;i<mtype.length;i++){
-                obj = {name: mtype[i].value,value:mtype[i].children}
-                data_obj.push(obj);
+                obj.push({name:mtype[i].value,value:mtype[i].children[0].value})
             }
-            console.log(data_obj);
             toolTipData.push({
                 name: name,
-                // value: [obj]
+                value: obj
             })
         });
 
