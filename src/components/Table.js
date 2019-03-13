@@ -67,7 +67,8 @@ class TableContent extends Component {
             minPrice: [],
             avgPrice: [],
             maxPrice: [],
-            dateTime: []
+            dateTime: [],
+            productName: []
         };
     }
 
@@ -147,12 +148,12 @@ class TableContent extends Component {
             let min = [];
             let avg = [];
             let max = [];
-            let date = [];
+            let name = [];
             for(let i=0;i<data.data.list.length;i++){
                 min.push(data.data.list[i].minPrice);
                 avg.push(data.data.list[i].avgPrice);
                 max.push(data.data.list[i].maxPrice);
-                date.push(data.data.list[i].dateTime);
+                name.push(data.data.list[i].productName);
             }
             const pagination = { ...this.state.pagination };
             // Read total count from server
@@ -168,7 +169,7 @@ class TableContent extends Component {
                 minPrice: min,
                 avgPrice: avg,
                 maxPrice: max,
-                dateTime: date
+                productName: name
             });
         });
     }
@@ -187,7 +188,7 @@ class TableContent extends Component {
         return (
             <LocaleProvider locale={zhCN}>
                 <div>
-                    <DetailLine minPrice={this.state.minPrice} avgPrice={this.state.avgPrice} maxPrice={this.state.maxPrice} dateTime={this.state.dateTime}/>
+                    <DetailLine minPrice={this.state.minPrice} avgPrice={this.state.avgPrice} maxPrice={this.state.maxPrice} productName={this.state.productName}/>
                     <Table
                         columns={columns}
                         rowKey={record => record.id}

@@ -3,9 +3,6 @@
  */
 
 /* Move down content because we have a fixed navbar that is 50px tall */
-body {
-  padding-top: 50px;
-}
 
 
 /*
@@ -13,6 +10,7 @@ body {
  */
 
 .sub-header {
+  margin-top: 20px;
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
 }
@@ -87,7 +85,8 @@ body {
   }
 }
 .main .page-header {
-  margin-top: 0;
+  margin: 20px 0;
+  padding-bottom: 10px;
 }
 
 .lists {

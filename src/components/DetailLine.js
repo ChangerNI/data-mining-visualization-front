@@ -10,7 +10,7 @@ import 'echarts/map/js/china';
 class DetailLine extends Component {
 
     componentWillReceiveProps = (nextProps) => {
-        const {minPrice,avgPrice,maxPrice,dateTime} = nextProps;
+        const {minPrice,avgPrice,maxPrice,productName} = nextProps;
         var myChart = echarts.init(document.getElementById('main'));
         var option = {
             title: {
@@ -41,7 +41,7 @@ class DetailLine extends Component {
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: dateTime
+                data: productName
             },
             yAxis: {
                 type: 'value'
