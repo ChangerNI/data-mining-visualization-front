@@ -8,7 +8,7 @@ import TableContent from './Table';
 // 引入 ECharts 主模块
 import echarts from 'echarts/lib/echarts';
 // 引入折线图
-import  'echarts/lib/chart/line';
+import  'echarts/lib/chart/bar';
 // 引入提示框和标题组件
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
@@ -27,28 +27,6 @@ class Detail extends Component {
     render() {
         return (
             <div id="detail">
-                <nav className="navbar navbar-inverse navbar-fixed-top">
-                    <div className="container-fluid">
-                        <div className="navbar-header">
-                            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
-                                    data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                                <span className="sr-only">Toggle navigation</span>
-                                <span className="icon-bar"></span>
-                                <span className="icon-bar"></span>
-                                <span className="icon-bar"></span>
-                            </button>
-                            <a className="navbar-brand" href="#">Project name</a>
-                        </div>
-                        <div id="navbar" className="navbar-collapse collapse">
-                            <ul className="nav navbar-nav navbar-right">
-                                <li><a href="#">Help</a></li>
-                            </ul>
-                            <form className="navbar-form navbar-right">
-                                <input type="text" className="form-control" placeholder="Search..." />
-                            </form>
-                        </div>
-                    </div>
-                </nav>
 
                 <div className="container-fluid">
                     <div className="row">
@@ -56,7 +34,7 @@ class Detail extends Component {
 
                         </div>
                         <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                            <h1 className="page-header">Dashboard</h1>
+                            <h1 className="page-header">农产品价格详情</h1>
 
                             <div className="row placeholders">
                                 <div className="col-xs-6 col-sm-2 placeholder lists vegetables">
@@ -101,7 +79,7 @@ class Detail extends Component {
                                 </div>
                             </div>
 
-                            <h2 className="sub-header">Section title</h2>
+                            <h2 className="sub-header" id="sub-header">蔬菜价格详情</h2>
                             <div className="table-responsive">
                                 <TableContent />
                             </div>

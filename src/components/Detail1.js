@@ -143,7 +143,7 @@ class Detail1 extends Component {
         }else if(this.state.types === "肉类"){
             type = "MEAT"
         }
-        axios.post(url + '/analysis',qs.stringify({
+        axios.post(url + '/product/analysis',qs.stringify({
             "productType":type,
             "productName":this.state.productName,
             "sizeType":this.state.productSize

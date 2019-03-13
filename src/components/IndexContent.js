@@ -170,7 +170,7 @@ class IndexContent extends Component {
                 // extraCssText: 'box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);', //添加阴影
                 formatter: function(params) {
                     if (params.seriesName !== "") {
-                        return params.name + ' ：  ' + formatNum(params.value) + ' kg';
+                        return params.name + '<br>' + formatNum(params.value) + ' kg';
                     }
                 },
 
@@ -310,15 +310,25 @@ class IndexContent extends Component {
         window.addEventListener("resize",function(){
             myChart.resize();
         });
+        // 动态显示tootip
+        var faultByHourIndex = 0; //播放所在下标
+        var faultByHourTime = setInterval(function() { //使得tootip每隔三秒自动显示
+            myChart.dispatchAction({
+                type: 'showTip', // 根据 tooltip 的配置项显示提示框。
+                seriesIndex: 0,
+                dataIndex: faultByHourIndex
+            });
+            faultByHourIndex++;
+        }, 5000);
     }
     map = (mapType,mapPercent,mapData) => {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('map'));
 
-        var nameColor = " rgb(55, 75, 113)"
-        var name_fontFamily = '宋体'
-        var name_fontSize = 35
-        var mapName = 'china'
+        var nameColor = " rgb(55, 75, 113)";
+        var name_fontFamily = '宋体';
+        var name_fontSize = 35;
+        var mapName = 'china';
         var data = [];
         var geoCoordMap = {};
         var toolTipData = [];
@@ -356,7 +366,7 @@ class IndexContent extends Component {
 
             let obj = [];
             for(let i=0;i<mtype.length;i++){
-                obj.push({name:mtype[i].value,value:mtype[i].children[0].value})
+                obj.push({name:mtype[i].value,value:mtype[i].children[0].value + "%"})
             }
             toolTipData.push({
                 name: name,
@@ -469,6 +479,7 @@ class IndexContent extends Component {
             geo: {
                 show: true,
                 map: mapName,
+                zoom: 1.20,
                 label: {
                     normal: {
                         show: false
@@ -628,10 +639,24 @@ class IndexContent extends Component {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echarts_3'));
 
+
+        var formatter = function (value, index) {
+            return value + 'kg';
+        }
+
+
         var option = {
 
             tooltip : {
-                trigger: 'axis'
+                trigger: 'axis',
+                formatter: function (params, ticket, callback) {
+                    //x轴名称
+                    var name = params[0].name
+                    //值
+                    var value = params[0].value
+                    var valueFliter = formatter(value)
+                    return name + '<br />' + valueFliter
+                }
             },
             legend: {
                 orient: 'vertical',
@@ -751,6 +776,16 @@ class IndexContent extends Component {
         window.addEventListener("resize",function(){
             myChart.resize();
         });
+        // 动态显示tootip
+        var faultByHourIndex = 0; //播放所在下标
+        var faultByHourTime = setInterval(function() { //使得tootip每隔三秒自动显示
+            myChart.dispatchAction({
+                type: 'showTip', // 根据 tooltip 的配置项显示提示框。
+                seriesIndex: 0,
+                dataIndex: faultByHourIndex
+            });
+            faultByHourIndex++;
+        }, 5000);
     }
     echarts_4 = (fruitType,fruitValue) => {
         // 基于准备好的dom，初始化echarts实例
@@ -792,7 +827,7 @@ class IndexContent extends Component {
                 // extraCssText: 'box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);', //添加阴影
                 formatter: function(params) {
                     if (params.seriesName !== "") {
-                        return params.name + ' ：  ' + formatNum(params.value) + ' kg';
+                        return params.name + '<br>' + formatNum(params.value) + ' kg';
                     }
                 },
 
@@ -935,6 +970,16 @@ class IndexContent extends Component {
         window.addEventListener("resize",function(){
             myChart.resize();
         });
+        // 动态显示tootip
+        var faultByHourIndex = 0; //播放所在下标
+        var faultByHourTime = setInterval(function() { //使得tootip每隔三秒自动显示
+            myChart.dispatchAction({
+                type: 'showTip', // 根据 tooltip 的配置项显示提示框。
+                seriesIndex: 0,
+                dataIndex: faultByHourIndex
+            });
+            faultByHourIndex++;
+        }, 5000);
     }
     echarts_5 = (oilType,oilValue) => {
         // 基于准备好的dom，初始化echarts实例
@@ -976,7 +1021,7 @@ class IndexContent extends Component {
                 // extraCssText: 'box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);', //添加阴影
                 formatter: function(params) {
                     if (params.seriesName !== "") {
-                        return params.name + ' ：  ' + formatNum(params.value) + ' kg';
+                        return params.name + '<br>' + formatNum(params.value) + ' kg';
                     }
                 },
 
@@ -1118,6 +1163,16 @@ class IndexContent extends Component {
         window.addEventListener("resize",function(){
             myChart.resize();
         });
+        // 动态显示tootip
+        var faultByHourIndex = 0; //播放所在下标
+        var faultByHourTime = setInterval(function() { //使得tootip每隔三秒自动显示
+            myChart.dispatchAction({
+                type: 'showTip', // 根据 tooltip 的配置项显示提示框。
+                seriesIndex: 0,
+                dataIndex: faultByHourIndex
+            });
+            faultByHourIndex++;
+        }, 5000);
     }
     echarts_6 = (meatType,meatValue) => {
         // 基于准备好的dom，初始化echarts实例
@@ -1159,7 +1214,7 @@ class IndexContent extends Component {
                 // extraCssText: 'box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);', //添加阴影
                 formatter: function(params) {
                     if (params.seriesName !== "") {
-                        return params.name + ' ：  ' + formatNum(params.value) + ' kg';
+                        return params.name + '<br>' + formatNum(params.value) + ' kg';
                     }
                 },
 
@@ -1301,6 +1356,16 @@ class IndexContent extends Component {
         window.addEventListener("resize",function(){
             myChart.resize();
         });
+        // 动态显示tootip
+        var faultByHourIndex = 0; //播放所在下标
+        var faultByHourTime = setInterval(function() { //使得tootip每隔三秒自动显示
+            myChart.dispatchAction({
+                type: 'showTip', // 根据 tooltip 的配置项显示提示框。
+                seriesIndex: 0,
+                dataIndex: faultByHourIndex
+            });
+            faultByHourIndex++;
+        }, 5000);
     }
 
 
@@ -1317,7 +1382,7 @@ class IndexContent extends Component {
                         <div className="con-left fl">
                             <div className="left-top">
                                 <div className="info">
-                                    <div className="info-title">实时统计</div>
+                                    <div className="info-title">上月统计</div>
                                     <img src={require('../styles/img/bj-1.png')} alt="" className="bj-1"/>
                                     <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
                                     <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
@@ -1329,7 +1394,7 @@ class IndexContent extends Component {
                                             </div>
                                             <div className="info-text fl">
                                                 <p>蔬菜</p>
-                                                <p>44,965,999</p>
+                                                <p>44,965,999 KG</p>
                                             </div>
                                         </div>
                                         <div className="info-2">
@@ -1338,7 +1403,7 @@ class IndexContent extends Component {
                                             </div>
                                             <div className="info-text fl">
                                                 <p>水果</p>
-                                                <p>12,320,000</p>
+                                                <p>12,320,000 KG</p>
                                             </div>
                                         </div>
                                         <div className="info-3">
@@ -1347,7 +1412,7 @@ class IndexContent extends Component {
                                             </div>
                                             <div className="info-text fl">
                                                 <p>肉禽蛋</p>
-                                                <p>818,530</p>
+                                                <p>818,530 KG</p>
                                             </div>
                                         </div>
                                         <div className="info-4">
@@ -1356,7 +1421,7 @@ class IndexContent extends Component {
                                             </div>
                                             <div className="info-text fl">
                                                 <p>淡水鱼</p>
-                                                <p>261,400</p>
+                                                <p>261,400 KG</p>
                                             </div>
                                         </div>
                                         <div className="info-5">
@@ -1365,7 +1430,7 @@ class IndexContent extends Component {
                                             </div>
                                             <div className="info-text fl">
                                                 <p>粮油</p>
-                                                <p>496,160</p>
+                                                <p>496,160 KG</p>
                                             </div>
                                         </div>
                                     </div>

@@ -71,7 +71,7 @@ class Line extends Component {
         };
         var option_last = {
             title: {
-                text: name + '最近7天价格趋势',
+                text: name + '未来7天价格趋势',
                 textStyle: {
                     fontWeight: 'normal',              //标题颜色
                     color: '#00BFFF'

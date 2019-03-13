@@ -75,6 +75,7 @@ class TableContent extends Component {
         this.fetch();
         $('.vegetables').click(
             () => {
+                $('#sub-header').text("蔬菜价格详情");
                 this.setState({
                     productType: "vegetable",
                     pageNum: 1
@@ -83,6 +84,7 @@ class TableContent extends Component {
             });
         $('.fruit').click(
             () => {
+            $('#sub-header').text("水果价格详情");
             this.setState({
                 productType: "fruit",
                 pageNum: 1
@@ -91,6 +93,7 @@ class TableContent extends Component {
         });
         $('.meat').click(
             () => {
+                $('#sub-header').text("肉禽蛋价格详情");
             this.setState({
                 productType: "meat"
             });
@@ -98,6 +101,7 @@ class TableContent extends Component {
         });
         $('.oil').click(
             () => {
+                $('#sub-header').text("粮油价格详情");
             this.setState({
                 productType: "oil"
             });
@@ -105,6 +109,7 @@ class TableContent extends Component {
         });
         $('.aquatic').click(
             () => {
+                $('#sub-header').text("水产价格详情");
             this.setState({
                 productType: "aquatic"
             });

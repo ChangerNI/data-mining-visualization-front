@@ -32,15 +32,15 @@ class Guide extends Component {
                         <div className="type-left">
                             <ul>
                                 <li id="first_index" className="active"><Link to="/index">首页</Link><span></span></li>
-                                <li><Link to="/detail">detail1</Link><span></span></li>
-                                <li><Link to="/detail1">detail2</Link><span></span></li>
-                                <li id="btnConnection"><Link to="/detail2">detail3</Link><span></span></li>
+                                <li><Link to="/detail">产品价格详情</Link><span></span></li>
+                                <li><Link to="/detail1">未来数据预测</Link><span></span></li>
+                                <li id="btnConnection"><Link to="/detail2">爬取数据更新</Link><span></span></li>
                             </ul>
                         </div>
                         <div className="type-right">
                             <p>
                                 <i className="el-icon-menu"></i>
-                                导航栏
+                                功能模块
                             </p>
                         </div>
                     </div>
