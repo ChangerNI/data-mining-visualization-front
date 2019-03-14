@@ -30,7 +30,7 @@
   <link href="http://maxcdn.bootstrapcdn.com/css?family=Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i" rel="stylesheet" />
   <link href="http://maxcdn.bootstrapcdn.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet" />
   <!-- //web-fonts -->
-  <title>React App</title>
+  <title>农产品流通和数据挖掘应用系统</title>
 
 </head>
 <body>
@@ -59,7 +59,7 @@
 
     $("#btnConnection").click(function() {
         //实现化WebSocket对象，指定要连接的服务器地址与端口
-        socket = new SockJS("http://10.202.0.6:8080/data-mining/websocket");
+        socket = new SockJS("http://192.168.1.87:8080/data-mining/websocket");
         //打开事件
         socket.onopen = function() {
             console.log("Socket 已打开");

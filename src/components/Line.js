@@ -52,19 +52,19 @@ class Line extends Component {
                 {
                     name:'最低价',
                     type:'line',
-                    stack: '总量',
+                    stack: '总量1',
                     data:minPrice
                 },
                 {
                     name:'平均价',
                     type:'line',
-                    stack: '总量',
+                    stack: '总量2',
                     data:avgPrice
                 },
                 {
                     name:'最高价',
                     type:'line',
-                    stack: '总量',
+                    stack: '总量3',
                     data:maxPrice
                 }
             ]
@@ -113,7 +113,7 @@ class Line extends Component {
                 {
                     name:'最低价',
                     type:'line',
-                    stack: '总量',
+                    stack: '总量1',
                     itemStyle: {
                         normal: {   //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
                             color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[{
@@ -147,7 +147,7 @@ class Line extends Component {
                 {
                     name:'平均价',
                     type:'line',
-                    stack: '总量',
+                    stack: '总量2',
                     itemStyle: {
                         normal: { //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
                             color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[{
@@ -181,7 +181,7 @@ class Line extends Component {
                 {
                     name:'最高价',
                     type:'line',
-                    stack: '总量',
+                    stack: '总量3',
                     itemStyle: {
                         normal: {   //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
                             color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[{

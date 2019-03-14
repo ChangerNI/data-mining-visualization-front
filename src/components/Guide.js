@@ -16,6 +16,7 @@ const history = createHistory();
 class Guide extends Component {
     componentDidMount = () => {
         $('.type-left ul li').click(function(){
+            $('#show_map').css("display","none");
             $(this).addClass('active').siblings('li').removeClass('active');
         })
         $('.type-right').click(function(){
@@ -50,6 +51,9 @@ class Guide extends Component {
                         <Route path="/detail1" component={Detail1}/>
                         <Route path="/detail2" component={Detail2}/>
                     </div>
+                </div>
+                <div id="show_map">
+                    <Index/>
                 </div>
             </div>
 

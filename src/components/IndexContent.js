@@ -319,7 +319,7 @@ class IndexContent extends Component {
                 dataIndex: faultByHourIndex
             });
             faultByHourIndex++;
-            if (faultByHourIndex > option.series[0].data.length) {
+            if (faultByHourIndex > option.series[0].data.length-1) {
                 faultByHourIndex = 0;
             }
         }, 3000);
@@ -340,12 +340,10 @@ class IndexContent extends Component {
         myChart.showLoading();
         var mapFeatures = echarts.getMap(mapName).geoJson.features;
         myChart.hideLoading();
-        console.log(mapData);
         var type = function(name){
             for(let i=0;i<mapData.length;i++){
                 if(mapData[i].value === name){
                     return mapData[i].children
-                    console.log(mapData[i].children)
                 }
             }
         }
@@ -411,7 +409,7 @@ class IndexContent extends Component {
                                 }
                             }
                         }
-                        console.log(toolTiphtml)
+                        // console.log(toolTiphtml)
                         // console.log(convertData(data))
                         return toolTiphtml;
                     } else {
@@ -424,7 +422,7 @@ class IndexContent extends Component {
                                 }
                             }
                         }
-                        console.log(toolTiphtml)
+                        // console.log(toolTiphtml)
                         // console.log(convertData(data))
                         return toolTiphtml;
                     }
@@ -636,7 +634,7 @@ class IndexContent extends Component {
                 dataIndex: faultByHourIndex
             });
             faultByHourIndex++;
-            if (faultByHourIndex > option.series[0].data.length) {
+            if (faultByHourIndex > option.series[0].data.length-1) {
                 faultByHourIndex = 0;
             }
         }, 3000);
@@ -791,7 +789,7 @@ class IndexContent extends Component {
                 dataIndex: faultByHourIndex
             });
             faultByHourIndex++;
-            if (faultByHourIndex > option.series[0].data.length) {
+            if (faultByHourIndex > option.series[0].data.length-1) {
                 faultByHourIndex = 0;
             }
         }, 3000);
@@ -991,7 +989,7 @@ class IndexContent extends Component {
             if (faultByHourIndex > option.series[0].data.length) {
                 faultByHourIndex = 0;
             }
-        }, 3000);
+        }, 3500);
     }
     echarts_5 = (oilType,oilValue) => {
         // 基于准备好的dom，初始化echarts实例
@@ -1184,7 +1182,7 @@ class IndexContent extends Component {
                 dataIndex: faultByHourIndex
             });
             faultByHourIndex++;
-            if (faultByHourIndex > option.series[0].data.length) {
+            if (faultByHourIndex > option.series[0].data.length-1) {
                 faultByHourIndex = 0;
             }
         }, 3000);
@@ -1380,7 +1378,7 @@ class IndexContent extends Component {
                 dataIndex: faultByHourIndex
             });
             faultByHourIndex++;
-            if (faultByHourIndex > option.series[0].data.length) {
+            if (faultByHourIndex > option.series[0].data.length-1) {
                 faultByHourIndex = 0;
             }
         }, 3000);

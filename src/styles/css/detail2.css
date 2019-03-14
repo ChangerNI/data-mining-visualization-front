@@ -6,19 +6,19 @@
 }
 
 .detail2 .progress{
-  width: 600px;
+  width: 80%;
   height: 25px;
   background: #262626;
   padding: 5px;
   overflow: visible;
   border-radius: 20px;
-  border-top: 1px solid #000;
+  border-top: 1px solid #bfe1ff;
   border-bottom: 1px solid #7992a8;
   display: inline-block;
   margin-bottom: 0px!important;
   padding: 5px;
   margin-top: 24px;
-  background: linear-gradient(to right, #2c3b4e, #4a688a, #2c3b4e);
+  background: linear-gradient(to right, #caeeff, #c4dfff, #c5deff);
 }
 .progress .progress-bar{
   border-radius: 20px;
