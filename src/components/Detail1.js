@@ -191,13 +191,14 @@ class Detail1 extends Component {
                     date_seven.push(Lists[i]);
                 }
                 if(i % 4 === 1){
-                    min_seven.push(Lists[i].toFixed(3));
+                    min_seven.push(Lists[i].replace(/([0-9]+\.[0-9]{3})[0-9]*/,"$1"));
+
                 }
                 if(i % 4 === 2){
-                    avg_seven.push(Lists[i].toFixed(3));
+                    avg_seven.push(Lists[i].replace(/([0-9]+\.[0-9]{3})[0-9]*/,"$1"));
                 }
                 if(i % 4 === 3){
-                    max_seven.push(Lists[i].toFixed(3));
+                    max_seven.push(Lists[i].replace(/([0-9]+\.[0-9]{3})[0-9]*/,"$1"));
                 }
             }
 
