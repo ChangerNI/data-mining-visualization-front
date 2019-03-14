@@ -168,7 +168,7 @@ class Detail1 extends Component {
             })
         })
 
-        axios.post(url + '/future',qs.stringify({
+        axios.post(url + '/product/future',qs.stringify({
             "productType":type,
             "productName":this.state.productName,
             "sizeType":this.state.productSize
