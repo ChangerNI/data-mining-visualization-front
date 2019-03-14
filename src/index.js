@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Guide from "./components/Guide";
+import Detail1 from "./components/Detail1";
 
 ReactDOM.render(
-    <Guide />,
+    <Detail1 />,
     document.getElementById('app')
 );
 

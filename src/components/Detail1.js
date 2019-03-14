@@ -70,21 +70,29 @@ class Detail1 extends Component {
             let fruitList = [];
             let aquaticList = [];
             let oilList = [];
-            for(let i=0;i<type[0].children.length;i++){
-                oilList.push({name:type[0].children[i].value,size:type[0].children[i].children});
-            }
-            console.log(vegetableList)
-            for(let i=0;i<type[1].children.length;i++){
-                fruitList.push({name:type[1].children[i].value,size:type[1].children[i].children});
-            }
-            for(let i=0;i<type[2].children.length;i++){
-                vegetableList.push({name:type[2].children[i].value,size:type[2].children[i].children});
-            }
-            for(let i=0;i<type[3].children.length;i++){
-                meatList.push({name:type[3].children[i].value,size:type[3].children[i].children});
-            }
-            for(let i=0;i<type[4].children.length;i++){
-                aquaticList.push({name:type[4].children[i].value,size:type[4].children[i].children});
+            console.log(type);
+            for(let i=0;i<type.length;i++){
+                if(type[i].value === "VEGETABLE"){
+                    for(let j=0;j<type[i].children.length;j++){
+                        vegetableList.push({name:type[i].children[j].value,size:type[i].children[j].children});
+                    }
+                }else if(type[i].value === "MEAT"){
+                    for(let j=0;j<type[i].children.length;j++){
+                        meatList.push({name:type[i].children[j].value,size:type[i].children[j].children});
+                    }
+                }else if(type[i].value === "FRUIT"){
+                    for(let j=0;j<type[i].children.length;j++){
+                        fruitList.push({name:type[i].children[j].value,size:type[i].children[j].children});
+                    }
+                }else if(type[i].value === "AQUATIC"){
+                    for(let j=0;j<type[i].children.length;j++){
+                        aquaticList.push({name:type[i].children[j].value,size:type[i].children[j].children});
+                    }
+                }else{
+                    for(let j=0;j<type[i].children.length;j++){
+                        oilList.push({name:type[i].children[j].value,size:type[i].children[j].children});
+                    }
+                }
             }
 
             const productNames = {
@@ -183,13 +191,13 @@ class Detail1 extends Component {
                     date_seven.push(Lists[i]);
                 }
                 if(i % 4 === 1){
-                    min_seven.push(Lists[i]);
+                    min_seven.push(Lists[i].toFixed(3));
                 }
                 if(i % 4 === 2){
-                    avg_seven.push(Lists[i]);
+                    avg_seven.push(Lists[i].toFixed(3));
                 }
                 if(i % 4 === 3){
-                    max_seven.push(Lists[i]);
+                    max_seven.push(Lists[i].toFixed(3));
                 }
             }
 

@@ -319,7 +319,10 @@ class IndexContent extends Component {
                 dataIndex: faultByHourIndex
             });
             faultByHourIndex++;
-        }, 5000);
+            if (faultByHourIndex > option.series[0].data.length) {
+                faultByHourIndex = 0;
+            }
+        }, 3000);
     }
     map = (mapType,mapPercent,mapData) => {
         // 基于准备好的dom，初始化echarts实例
@@ -633,7 +636,10 @@ class IndexContent extends Component {
                 dataIndex: faultByHourIndex
             });
             faultByHourIndex++;
-        }, 5000);
+            if (faultByHourIndex > option.series[0].data.length) {
+                faultByHourIndex = 0;
+            }
+        }, 3000);
     }
     echarts_3 = (vegetableType,vegetableValue) => {
         // 基于准备好的dom，初始化echarts实例
@@ -785,7 +791,10 @@ class IndexContent extends Component {
                 dataIndex: faultByHourIndex
             });
             faultByHourIndex++;
-        }, 5000);
+            if (faultByHourIndex > option.series[0].data.length) {
+                faultByHourIndex = 0;
+            }
+        }, 3000);
     }
     echarts_4 = (fruitType,fruitValue) => {
         // 基于准备好的dom，初始化echarts实例
@@ -979,7 +988,10 @@ class IndexContent extends Component {
                 dataIndex: faultByHourIndex
             });
             faultByHourIndex++;
-        }, 5000);
+            if (faultByHourIndex > option.series[0].data.length) {
+                faultByHourIndex = 0;
+            }
+        }, 3000);
     }
     echarts_5 = (oilType,oilValue) => {
         // 基于准备好的dom，初始化echarts实例
@@ -1172,7 +1184,10 @@ class IndexContent extends Component {
                 dataIndex: faultByHourIndex
             });
             faultByHourIndex++;
-        }, 5000);
+            if (faultByHourIndex > option.series[0].data.length) {
+                faultByHourIndex = 0;
+            }
+        }, 3000);
     }
     echarts_6 = (meatType,meatValue) => {
         // 基于准备好的dom，初始化echarts实例
@@ -1365,7 +1380,10 @@ class IndexContent extends Component {
                 dataIndex: faultByHourIndex
             });
             faultByHourIndex++;
-        }, 5000);
+            if (faultByHourIndex > option.series[0].data.length) {
+                faultByHourIndex = 0;
+            }
+        }, 3000);
     }
 
 
@@ -1382,7 +1400,7 @@ class IndexContent extends Component {
                         <div className="con-left fl">
                             <div className="left-top">
                                 <div className="info">
-                                    <div className="info-title">上月统计</div>
+                                    <div className="info-title">上月统计 <span style={{"font-size":"12px"}}>(单位：KG)</span></div>
                                     <img src={require('../styles/img/bj-1.png')} alt="" className="bj-1"/>
                                     <img src={require("../styles/img/bj-2.png")} alt="" className="bj-2"/>
                                     <img src={require("../styles/img/bj-3.png")} alt="" className="bj-3"/>
@@ -1394,7 +1412,7 @@ class IndexContent extends Component {
                                             </div>
                                             <div className="info-text fl">
                                                 <p>蔬菜</p>
-                                                <p>44,965,999 KG</p>
+                                                <p>44,965,999</p>
                                             </div>
                                         </div>
                                         <div className="info-2">
@@ -1403,7 +1421,7 @@ class IndexContent extends Component {
                                             </div>
                                             <div className="info-text fl">
                                                 <p>水果</p>
-                                                <p>12,320,000 KG</p>
+                                                <p>12,320,000</p>
                                             </div>
                                         </div>
                                         <div className="info-3">
@@ -1412,7 +1430,7 @@ class IndexContent extends Component {
                                             </div>
                                             <div className="info-text fl">
                                                 <p>肉禽蛋</p>
-                                                <p>818,530 KG</p>
+                                                <p>818,530</p>
                                             </div>
                                         </div>
                                         <div className="info-4">
@@ -1421,7 +1439,7 @@ class IndexContent extends Component {
                                             </div>
                                             <div className="info-text fl">
                                                 <p>淡水鱼</p>
-                                                <p>261,400 KG</p>
+                                                <p>261,400</p>
                                             </div>
                                         </div>
                                         <div className="info-5">
@@ -1430,7 +1448,7 @@ class IndexContent extends Component {
                                             </div>
                                             <div className="info-text fl">
                                                 <p>粮油</p>
-                                                <p>496,160 KG</p>
+                                                <p>496,160</p>
                                             </div>
                                         </div>
                                     </div>
