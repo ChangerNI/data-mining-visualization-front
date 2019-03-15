@@ -17,7 +17,6 @@ class Detail2 extends Component {
     componentDidMount() {
         let height = window.innerHeight;
         $('#detail2').css("height",height);
-
     }
 
     sendRequest = () => {

@@ -24,6 +24,83 @@
   <script src="%PUBLIC_URL%/js/bootstrap-table.js"></script>
   <script src="%PUBLIC_URL%/js/bootstrap-table-zh-CN.js"></script>
   <script src="%PUBLIC_URL%/js/table.js"></script>
+  <script>
+      var socket;
+      if(typeof(WebSocket) == "undefined") {
+          alert("您的浏览器不支持WebSocket");
+      }
+
+      $( document ).on( "click", "#btnConnection", function(){
+          //你的事件处理过程
+          //实现化WebSocket对象，指定要连接的服务器地址与端口
+          socket = new SockJS("http://10.202.0.6:8080/data-mining/websocket");
+          //打开事件
+          socket.onopen = function() {
+              console.log("Socket 已打开");
+          };
+
+          var nums = 0;
+          //获得消息事件
+          socket.onmessage = function(message) {
+              let info = JSON.stringify(message);
+              $('#log-cat').append("<span class='insert-data'>" + JSON.parse(info).data + "</span>");
+              let num = JSON.parse(info).data.substring(26, 28);
+              let pro = 100 / num;
+              if (num) {
+                  nums++;
+                  pro = pro * nums;
+                  $('#progress').css('width', pro + "%");
+                  $('#progress-value').text(pro + "%");
+                  if (nums === num && !nums) {
+                      $('#progress').css('width', "100%");
+                      $('#progress-value').text("100%");
+                  }
+              }
+          }
+      });
+
+      // $("#btnConnection").click(function() {
+      //     console.log("hhhh");
+      //     //实现化WebSocket对象，指定要连接的服务器地址与端口
+      //     socket = new SockJS("http://10.202.0.6:8080/data-mining/websocket");
+      //     //打开事件
+      //     socket.onopen = function() {
+      //         console.log("Socket 已打开");
+      //     };
+      //
+      //     var nums = 0;
+      //     //获得消息事件
+      //     socket.onmessage = function(message) {
+      //         let info = JSON.stringify(message);
+      //         $('#log-cat').append("<span class='insert-data'>"+JSON.parse(info).data+"</span>");
+      //         let num = JSON.parse(info).data.substring(26,28);
+      //         let pro = 100/num;
+      //         if(num){
+      //             nums ++;
+      //             pro = pro * nums;
+      //             $('#progress').css('width',pro+"%");
+      //             $('#progress-value').text(pro + "%");
+      //             if(nums === num && !nums){
+      //                 $('#progress').css('width',"100%");
+      //                 $('#progress-value').text("100%");
+      //             }
+      //         }
+      //     };
+      //     //关闭事件
+      //     socket.onclose = function() {
+      //         alert("Socket已关闭");
+      //     };
+      //     //发生了错误事件
+      //     socket.onerror = function() {
+      //         alert("发生了错误");
+      //     }
+      // });
+
+      //关闭
+      $("#btnClose").click(function() {
+          socket.close();
+      });
+  </script>
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   <!-- //css files -->
   <!-- web-fonts -->
@@ -59,7 +136,7 @@
 
     $("#btnConnection").click(function() {
         //实现化WebSocket对象，指定要连接的服务器地址与端口
-        socket = new SockJS("http://192.168.1.87:8080/data-mining/websocket");
+        socket = new SockJS("http://10.202.0.6:8080/data-mining/websocket");
         //打开事件
         socket.onopen = function() {
             console.log("Socket 已打开");

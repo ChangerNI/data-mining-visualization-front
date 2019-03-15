@@ -1,1 +1,1 @@
-export const url = "http://192.168.1.87:8080/data-mining";
+export const url = "http://10.202.0.6:8080/data-mining";
